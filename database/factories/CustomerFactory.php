@@ -1,0 +1,28 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Customer;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends Factory<Customer>
+ */
+class CustomerFactory extends Factory
+{
+    protected $model = Customer::class;
+
+    public function definition(): array
+    {
+        return [
+            'name' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
+            'phone' => fake()->phoneNumber(),
+            'company_name' => fake()->boolean(70) ? fake()->company() : null,
+            'address' => fake()->address(),
+            'notes' => fake()->paragraphs(2, true),
+            'status' => fake()->randomElement(['lead', 'active', 'past']),
+            'source' => fake()->randomElement(['website', 'referral', 'ads', 'other']),
+        ];
+    }
+}

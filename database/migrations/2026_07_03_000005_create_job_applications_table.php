@@ -8,13 +8,14 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('contact_submissions', function (Blueprint $table) {
+        Schema::create('job_applications', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email');
-            $table->string('phone')->nullable();
-            $table->longText('message');
-            $table->string('source_page');
+            $table->foreignId('job_listing_id')->constrained()->cascadeOnDelete();
+            $table->string('applicant_name');
+            $table->string('email')->index();
+            $table->string('phone');
+            $table->string('resume');
+            $table->text('cover_letter')->nullable();
             $table->string('status')->default('new')->index();
             $table->timestamp('created_at')->useCurrent();
         });

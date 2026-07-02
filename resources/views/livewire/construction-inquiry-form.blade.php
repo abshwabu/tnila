@@ -27,18 +27,11 @@
             </label>
         </div>
 
-        <div class="grid gap-4 md:grid-cols-2">
-            <label class="grid gap-2">
-                <span class="text-sm font-medium text-slate-700">Phone</span>
-                <input wire:model="phone" type="text" class="rounded-2xl border border-stone-300 px-4 py-3 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20" />
-                @error('phone') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
-            </label>
-            <label class="grid gap-2">
-                <span class="text-sm font-medium text-slate-700">Company</span>
-                <input wire:model="company" type="text" class="rounded-2xl border border-stone-300 px-4 py-3 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20" />
-                @error('company') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
-            </label>
-        </div>
+        <label class="grid gap-2">
+            <span class="text-sm font-medium text-slate-700">Phone</span>
+            <input wire:model="phone" type="text" class="rounded-2xl border border-stone-300 px-4 py-3 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20" />
+            @error('phone') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
+        </label>
 
         <label class="grid gap-2">
             <span class="text-sm font-medium text-slate-700">Project details</span>

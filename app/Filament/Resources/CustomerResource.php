@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\InquiryResource\Pages;
-use App\Models\ContactSubmission;
+use App\Filament\Resources\CustomerResource\Pages;
+use App\Models\Customer;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -12,13 +12,13 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class InquiryResource extends Resource
+class CustomerResource extends Resource
 {
-    protected static ?string $model = ContactSubmission::class;
+    protected static ?string $model = Customer::class;
 
-    protected static ?string $navigationGroup = 'Leads';
+    protected static ?string $navigationGroup = 'CRM';
 
-    protected static ?string $navigationIcon = 'heroicon-o-inbox';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
 
     public static function form(Form $form): Form
     {
@@ -31,22 +31,32 @@ class InquiryResource extends Resource
                 ->required()
                 ->maxLength(255),
             TextInput::make('phone')
-                ->tel()
+                ->required()
                 ->maxLength(255),
-            TextInput::make('source_page')
+            TextInput::make('company_name')
+                ->maxLength(255),
+            TextInput::make('address')
                 ->required()
                 ->maxLength(255),
             Select::make('status')
                 ->options([
-                    'new' => 'New',
-                    'contacted' => 'Contacted',
-                    'closed' => 'Closed',
+                    'lead' => 'Lead',
+                    'active' => 'Active',
+                    'past' => 'Past',
                 ])
                 ->required()
-                ->default('new'),
-            Textarea::make('message')
+                ->default('lead'),
+            Select::make('source')
+                ->options([
+                    'website' => 'Website',
+                    'referral' => 'Referral',
+                    'ads' => 'Ads',
+                    'other' => 'Other',
+                ])
                 ->required()
-                ->rows(6)
+                ->default('website'),
+            Textarea::make('notes')
+                ->rows(5)
                 ->columnSpanFull(),
         ]);
     }
@@ -56,13 +66,15 @@ class InquiryResource extends Resource
         return $table->columns([
             Tables\Columns\TextColumn::make('name')->searchable()->sortable(),
             Tables\Columns\TextColumn::make('email')->searchable(),
-            Tables\Columns\TextColumn::make('source_page')->searchable(),
+            Tables\Columns\TextColumn::make('phone')->searchable(),
+            Tables\Columns\TextColumn::make('company_name')->label('Company')->searchable(),
             Tables\Columns\BadgeColumn::make('status')
                 ->colors([
-                    'gray' => 'new',
-                    'warning' => 'contacted',
-                    'success' => 'closed',
+                    'warning' => 'lead',
+                    'success' => 'active',
+                    'gray' => 'past',
                 ]),
+            Tables\Columns\TextColumn::make('source')->badge(),
             Tables\Columns\TextColumn::make('created_at')->dateTime()->since()->sortable(),
         ])->defaultSort('created_at', 'desc');
     }
@@ -70,9 +82,9 @@ class InquiryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListInquiries::route('/'),
-            'create' => Pages\CreateInquiry::route('/create'),
-            'edit' => Pages\EditInquiry::route('/{record}/edit'),
+            'index' => Pages\ListCustomers::route('/'),
+            'create' => Pages\CreateCustomer::route('/create'),
+            'edit' => Pages\EditCustomer::route('/{record}/edit'),
         ];
     }
 }

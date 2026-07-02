@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class Service extends Model
+class BlogPost extends Model
 {
     use HasFactory;
     use HasSlug;
@@ -17,16 +17,17 @@ class Service extends Model
     protected $fillable = [
         'title',
         'slug',
-        'short_description',
-        'description',
-        'icon',
-        'featured',
-        'order',
+        'excerpt',
+        'content',
+        'category',
+        'author_name',
+        'cover_image',
+        'published_at',
+        'status',
     ];
 
     protected $casts = [
-        'featured' => 'boolean',
-        'order' => 'integer',
+        'published_at' => 'datetime',
     ];
 
     public function getSlugOptions(): SlugOptions

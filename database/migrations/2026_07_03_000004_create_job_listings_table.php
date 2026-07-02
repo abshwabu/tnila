@@ -8,15 +8,16 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('services', function (Blueprint $table) {
+        Schema::create('job_listings', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->string('short_description');
+            $table->string('department');
+            $table->string('location');
+            $table->string('employment_type')->index();
             $table->longText('description');
-            $table->string('icon');
-            $table->boolean('featured')->default(false)->index();
-            $table->unsignedInteger('order')->default(0)->index();
+            $table->text('requirements');
+            $table->string('status')->default('open')->index();
         });
     }
 };

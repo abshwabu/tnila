@@ -10,17 +10,19 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('title');
             $table->string('slug')->unique();
-            $table->string('client')->nullable();
-            $table->string('location')->nullable();
-            $table->string('category')->nullable();
-            $table->string('summary')->nullable();
-            $table->longText('description')->nullable();
-            $table->string('status')->default('completed');
+            $table->unsignedBigInteger('customer_id')->nullable()->index();
+            $table->unsignedBigInteger('industry_id')->index();
+            $table->text('description');
+            $table->string('status')->index();
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
+            $table->string('location');
             $table->boolean('featured')->default(false);
-            $table->timestamp('completed_at')->nullable();
             $table->timestamps();
+
+            $table->index('featured');
         });
     }
 };

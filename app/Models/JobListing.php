@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class Service extends Model
+class JobListing extends Model
 {
     use HasFactory;
     use HasSlug;
@@ -17,17 +17,18 @@ class Service extends Model
     protected $fillable = [
         'title',
         'slug',
-        'short_description',
+        'department',
+        'location',
+        'employment_type',
         'description',
-        'icon',
-        'featured',
-        'order',
+        'requirements',
+        'status',
     ];
 
-    protected $casts = [
-        'featured' => 'boolean',
-        'order' => 'integer',
-    ];
+    public function applications()
+    {
+        return $this->hasMany(JobApplication::class);
+    }
 
     public function getSlugOptions(): SlugOptions
     {

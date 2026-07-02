@@ -2,85 +2,100 @@
 
 namespace Database\Seeders;
 
-use App\Models\Inquiry;
+use App\Models\BlogPost;
+use App\Models\ContactSubmission;
+use App\Models\Customer;
+use App\Models\Faq;
+use App\Models\Industry;
+use App\Models\JobApplication;
+use App\Models\JobListing;
 use App\Models\Project;
 use App\Models\Service;
-use App\Models\User;
+use App\Models\Testimonial;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        User::query()->updateOrCreate(
-            ['email' => 'admin@tnila.test'],
-            [
-                'name' => 'Tnila Admin',
-                'password' => Hash::make('password'),
-                'email_verified_at' => now(),
-            ]
-        );
+        $industries = collect([
+            Industry::query()->updateOrCreate(
+                ['name' => 'Residential'],
+                ['description' => 'Homes, apartment buildings, and living communities.', 'icon' => 'home']
+            ),
+            Industry::query()->updateOrCreate(
+                ['name' => 'Commercial'],
+                ['description' => 'Retail, office, and hospitality projects.', 'icon' => 'building-office-2']
+            ),
+            Industry::query()->updateOrCreate(
+                ['name' => 'Industrial'],
+                ['description' => 'Factories, plants, storage, and logistics facilities.', 'icon' => 'cpu-chip']
+            ),
+            Industry::query()->updateOrCreate(
+                ['name' => 'Infrastructure'],
+                ['description' => 'Roads, utilities, public works, and civil projects.', 'icon' => 'truck']
+            ),
+        ]);
 
-        foreach ([
-            [
-                'name' => 'General contracting',
-                'summary' => 'Reliable build delivery for commercial and residential projects.',
-                'details' => 'Planning, procurement, site coordination, and handover support.',
-                'sort_order' => 1,
-                'is_active' => true,
-            ],
-            [
-                'name' => 'Renovation works',
-                'summary' => 'Efficient upgrades for occupied and vacant properties.',
-                'details' => 'Interior transformations, extensions, and structural improvements.',
-                'sort_order' => 2,
-                'is_active' => true,
-            ],
-        ] as $service) {
-            Service::query()->updateOrCreate(
-                ['name' => $service['name']],
-                $service
-            );
+        $customers = Customer::factory()->count(20)->create();
+
+        Service::factory()->count(8)->create();
+
+        $projectFixtures = [
+            ['title' => 'Oakridge Apartments', 'location' => 'Nairobi', 'status' => 'completed', 'featured' => true, 'industry' => 'Residential'],
+            ['title' => 'Horizon Villas', 'location' => 'Kiambu', 'status' => 'in_progress', 'featured' => true, 'industry' => 'Residential'],
+            ['title' => 'Nile Business Tower', 'location' => 'Nairobi', 'status' => 'planning', 'featured' => false, 'industry' => 'Commercial'],
+            ['title' => 'Metro Logistics Hub', 'location' => 'Mombasa', 'status' => 'completed', 'featured' => false, 'industry' => 'Industrial'],
+            ['title' => 'County Access Road Upgrade', 'location' => 'Nakuru', 'status' => 'in_progress', 'featured' => true, 'industry' => 'Infrastructure'],
+            ['title' => 'Summit Heights Phase 2', 'location' => 'Nairobi', 'status' => 'planning', 'featured' => false, 'industry' => 'Residential'],
+            ['title' => 'Ridgeview Office Park', 'location' => 'Eldoret', 'status' => 'completed', 'featured' => false, 'industry' => 'Commercial'],
+            ['title' => 'Sunrise Cold Storage', 'location' => 'Thika', 'status' => 'completed', 'featured' => false, 'industry' => 'Industrial'],
+            ['title' => 'Water Pipeline Extension', 'location' => 'Machakos', 'status' => 'in_progress', 'featured' => true, 'industry' => 'Infrastructure'],
+            ['title' => 'Palm Court Residences', 'location' => 'Nairobi', 'status' => 'completed', 'featured' => false, 'industry' => 'Residential'],
+            ['title' => 'Cedar Mall Fit-Out', 'location' => 'Mombasa', 'status' => 'planning', 'featured' => false, 'industry' => 'Commercial'],
+            ['title' => 'Northgate Workshop', 'location' => 'Kisumu', 'status' => 'in_progress', 'featured' => false, 'industry' => 'Industrial'],
+            ['title' => 'Bridge Reinforcement Works', 'location' => 'Nakuru', 'status' => 'completed', 'featured' => false, 'industry' => 'Infrastructure'],
+            ['title' => 'Blue Ridge Homes', 'location' => 'Kiambu', 'status' => 'completed', 'featured' => true, 'industry' => 'Residential'],
+            ['title' => 'Harbor View Offices', 'location' => 'Mombasa', 'status' => 'planning', 'featured' => false, 'industry' => 'Commercial'],
+        ];
+
+        foreach ($projectFixtures as $index => $projectFixture) {
+            Project::query()->create([
+                'title' => $projectFixture['title'],
+                'customer_id' => $customers[$index % $customers->count()]->id,
+                'industry_id' => $industries->firstWhere('name', $projectFixture['industry'])->id,
+                'description' => 'Delivered with disciplined scheduling, quality control, and on-site coordination.',
+                'status' => $projectFixture['status'],
+                'start_date' => now()->subMonths(18 - $index)->toDateString(),
+                'end_date' => $projectFixture['status'] === 'completed' ? now()->subMonths(12 - $index)->toDateString() : null,
+                'location' => $projectFixture['location'],
+                'featured' => $projectFixture['featured'],
+            ]);
         }
 
-        foreach ([
-            [
-                'name' => 'Oakridge Apartments',
-                'summary' => 'A modern residential apartment block with premium finishes.',
-                'client' => 'Oakridge Developments',
-                'location' => 'Nairobi',
-                'category' => 'Residential',
-                'status' => 'completed',
-                'featured' => true,
-                'completed_at' => now()->subMonths(3),
-            ],
-            [
-                'name' => 'Metro Logistics Hub',
-                'summary' => 'Warehouse and office build for a growing logistics client.',
-                'client' => 'Metro Freight',
-                'location' => 'Mombasa',
-                'category' => 'Commercial',
-                'status' => 'completed',
-                'featured' => false,
-                'completed_at' => now()->subMonths(5),
-            ],
-        ] as $project) {
-            Project::query()->updateOrCreate(
-                ['name' => $project['name']],
-                $project
-            );
+        $projectIds = Project::query()->pluck('id');
+
+        for ($index = 0; $index < 12; $index++) {
+            Testimonial::factory()->create([
+                'customer_id' => $customers[$index % $customers->count()]->id,
+                'project_id' => $projectIds[$index % $projectIds->count()],
+                'approved' => true,
+            ]);
         }
 
-        Inquiry::query()->firstOrCreate(
-            ['email' => 'hello@tnila.test'],
-            [
-                'name' => 'Sample Lead',
-                'phone' => '+254700000000',
-                'company' => 'Demo Client Ltd',
-                'message' => 'We need a partner for a multi-storey residential build.',
-                'status' => 'new',
-            ]
-        );
+        BlogPost::factory()->count(10)->create();
+
+        $jobListings = JobListing::factory()->count(5)->create();
+
+        $jobListings->each(function (JobListing $jobListing): void {
+            JobApplication::factory()
+                ->count(collect([1, 2, 3])->random())
+                ->for($jobListing)
+                ->create();
+        });
+
+        ContactSubmission::factory()->count(5)->create();
+
+        Faq::factory()->count(10)->create();
     }
 }

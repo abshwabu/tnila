@@ -2,19 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-class Inquiry extends Model
+class Inquiry extends ContactSubmission
 {
-    use HasFactory;
-
-    protected $fillable = [
-        'name',
-        'email',
-        'phone',
-        'company',
-        'message',
-        'status',
-    ];
 }

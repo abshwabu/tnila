@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\Inquiry;
+use App\Models\ContactSubmission;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -17,9 +17,6 @@ class ConstructionInquiryForm extends Component
     #[Validate('nullable|string|max:255')]
     public string $phone = '';
 
-    #[Validate('nullable|string|max:255')]
-    public string $company = '';
-
     #[Validate('required|string|min:20')]
     public string $message = '';
 
@@ -29,12 +26,13 @@ class ConstructionInquiryForm extends Component
     {
         $validated = $this->validate();
 
-        Inquiry::create([
+        ContactSubmission::create([
             ...$validated,
             'status' => 'new',
+            'source_page' => request()->path() ?: '/',
         ]);
 
-        $this->reset(['name', 'email', 'phone', 'company', 'message']);
+        $this->reset(['name', 'email', 'phone', 'message']);
         $this->submitted = true;
     }
 

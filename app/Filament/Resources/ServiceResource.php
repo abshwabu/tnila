@@ -23,30 +23,32 @@ class ServiceResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            TextInput::make('name')
+            TextInput::make('title')
                 ->required()
                 ->maxLength(255),
-            TextInput::make('summary')
+            TextInput::make('short_description')
                 ->maxLength(255),
-            RichEditor::make('details')
+            RichEditor::make('description')
                 ->columnSpanFull(),
-            TextInput::make('sort_order')
+            TextInput::make('icon')
+                ->required()
+                ->maxLength(255),
+            Toggle::make('featured'),
+            TextInput::make('order')
                 ->numeric()
                 ->default(0)
                 ->required(),
-            Toggle::make('is_active'),
         ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table->columns([
-            Tables\Columns\TextColumn::make('name')->searchable()->sortable(),
-            Tables\Columns\TextColumn::make('summary')->limit(40),
-            Tables\Columns\IconColumn::make('is_active')->boolean(),
-            Tables\Columns\TextColumn::make('sort_order')->sortable(),
-            Tables\Columns\TextColumn::make('updated_at')->dateTime()->since()->sortable(),
-        ])->defaultSort('sort_order');
+            Tables\Columns\TextColumn::make('title')->searchable()->sortable(),
+            Tables\Columns\TextColumn::make('icon'),
+            Tables\Columns\IconColumn::make('featured')->boolean(),
+            Tables\Columns\TextColumn::make('order')->sortable(),
+        ])->defaultSort('order');
     }
 
     public static function getPages(): array

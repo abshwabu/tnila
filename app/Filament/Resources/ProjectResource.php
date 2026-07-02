@@ -8,7 +8,6 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
@@ -27,31 +26,38 @@ class ProjectResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            TextInput::make('name')
+            TextInput::make('title')
                 ->required()
                 ->maxLength(255),
-            TextInput::make('client')
-                ->maxLength(255),
-            TextInput::make('location')
-                ->maxLength(255),
+            Select::make('customer_id')
+                ->relationship('customer', 'name')
+                ->searchable()
+                ->preload(),
+            Select::make('industry_id')
+                ->relationship('industry', 'name')
+                ->searchable()
+                ->preload()
+                ->required(),
             Select::make('status')
                 ->options([
-                    'planned' => 'Planned',
+                    'planning' => 'Planning',
                     'in_progress' => 'In progress',
                     'completed' => 'Completed',
                 ])
+                ->required(),
+            DatePicker::make('start_date')
+                ->required(),
+            DatePicker::make('end_date'),
+            TextInput::make('location')
                 ->required()
-                ->default('completed'),
-            Textarea::make('summary')
-                ->rows(3)
-                ->columnSpanFull(),
+                ->maxLength(255),
             RichEditor::make('description')
                 ->columnSpanFull(),
-            DatePicker::make('completed_at'),
             Toggle::make('featured'),
-            SpatieMediaLibraryFileUpload::make('featured_image')
-                ->collection('featured')
+            SpatieMediaLibraryFileUpload::make('images')
+                ->collection('images')
                 ->image()
+                ->multiple()
                 ->columnSpanFull(),
         ]);
     }
@@ -60,19 +66,20 @@ class ProjectResource extends Resource
     {
         return $table->columns([
             Tables\Columns\ImageColumn::make('featured_image')
-                ->state(fn (Project $record): ?string => $record->getFirstMediaUrl('featured', 'preview') ?: null),
-            Tables\Columns\TextColumn::make('name')->searchable()->sortable(),
-            Tables\Columns\TextColumn::make('client')->searchable(),
+                ->state(fn (Project $record): ?string => $record->featuredImageUrl()),
+            Tables\Columns\TextColumn::make('title')->searchable()->sortable(),
+            Tables\Columns\TextColumn::make('customer.name')->label('Customer')->searchable(),
+            Tables\Columns\TextColumn::make('industry.name')->label('Industry')->searchable(),
             Tables\Columns\TextColumn::make('location')->searchable(),
             Tables\Columns\IconColumn::make('featured')->boolean(),
             Tables\Columns\BadgeColumn::make('status')
                 ->colors([
-                    'warning' => 'planned',
+                    'warning' => 'planning',
                     'info' => 'in_progress',
                     'success' => 'completed',
                 ]),
-            Tables\Columns\TextColumn::make('updated_at')->dateTime()->since()->sortable(),
-        ])->defaultSort('updated_at', 'desc');
+            Tables\Columns\TextColumn::make('start_date')->date()->sortable(),
+        ])->defaultSort('start_date', 'desc');
     }
 
     public static function getPages(): array

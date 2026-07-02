@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class Service extends Model
+class Industry extends Model
 {
     use HasFactory;
     use HasSlug;
@@ -15,24 +15,21 @@ class Service extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'title',
+        'name',
         'slug',
-        'short_description',
         'description',
         'icon',
-        'featured',
-        'order',
     ];
 
-    protected $casts = [
-        'featured' => 'boolean',
-        'order' => 'integer',
-    ];
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
 
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom('title')
+            ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
     }
 
