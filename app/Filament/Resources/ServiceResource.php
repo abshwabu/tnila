@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ServiceResource\Pages;
 use App\Models\Service;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -20,24 +21,34 @@ class ServiceResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-briefcase';
 
+    protected static ?int $navigationSort = 2;
+
     public static function form(Form $form): Form
     {
         return $form->schema([
-            TextInput::make('title')
-                ->required()
-                ->maxLength(255),
-            TextInput::make('short_description')
-                ->maxLength(255),
-            RichEditor::make('description')
+            Section::make('Service Details')
+                ->schema([
+                    TextInput::make('title')
+                        ->required()
+                        ->maxLength(255),
+                    TextInput::make('short_description')
+                        ->maxLength(255),
+                    TextInput::make('icon')
+                        ->required()
+                        ->maxLength(255),
+                    Toggle::make('featured'),
+                    TextInput::make('order')
+                        ->numeric()
+                        ->default(0)
+                        ->required(),
+                ])
+                ->columns(2),
+            Section::make('Content')
+                ->schema([
+                    RichEditor::make('description')
+                        ->columnSpanFull(),
+                ])
                 ->columnSpanFull(),
-            TextInput::make('icon')
-                ->required()
-                ->maxLength(255),
-            Toggle::make('featured'),
-            TextInput::make('order')
-                ->numeric()
-                ->default(0)
-                ->required(),
         ]);
     }
 
@@ -48,7 +59,9 @@ class ServiceResource extends Resource
             Tables\Columns\TextColumn::make('icon'),
             Tables\Columns\IconColumn::make('featured')->boolean(),
             Tables\Columns\TextColumn::make('order')->sortable(),
-        ])->defaultSort('order');
+        ])
+            ->defaultSort('order')
+            ->reorderable('order');
     }
 
     public static function getPages(): array
