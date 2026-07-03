@@ -8,7 +8,7 @@
     </div>
 
     @if ($submitted)
-        <div class="mt-6 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
+        <div class="mt-6 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900" role="status" aria-live="polite">
             Thanks, your application has been submitted. Please check your inbox for confirmation.
         </div>
     @endif
@@ -17,32 +17,32 @@
         <div class="grid gap-4 md:grid-cols-2">
             <label class="grid gap-2">
                 <span class="text-sm font-medium text-slate-700">Full name</span>
-                <input wire:model.live="applicantName" type="text" class="rounded-2xl border-stone-300 bg-stone-50 px-4 py-3 text-sm focus:border-amber-500 focus:ring-amber-500/20" />
-                @error('applicantName') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
+                <input wire:model.live="applicantName" type="text" aria-invalid="{{ $errors->has('applicantName') ? 'true' : 'false' }}" aria-describedby="job-application-name-error" class="rounded-2xl border-stone-300 bg-stone-50 px-4 py-3 text-sm focus:border-amber-500 focus:ring-amber-500/20" />
+                @error('applicantName') <span id="job-application-name-error" class="text-sm text-red-600" role="alert">{{ $message }}</span> @enderror
             </label>
             <label class="grid gap-2">
                 <span class="text-sm font-medium text-slate-700">Email</span>
-                <input wire:model.live="email" type="email" class="rounded-2xl border-stone-300 bg-stone-50 px-4 py-3 text-sm focus:border-amber-500 focus:ring-amber-500/20" />
-                @error('email') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
+                <input wire:model.live="email" type="email" aria-invalid="{{ $errors->has('email') ? 'true' : 'false' }}" aria-describedby="job-application-email-error" class="rounded-2xl border-stone-300 bg-stone-50 px-4 py-3 text-sm focus:border-amber-500 focus:ring-amber-500/20" />
+                @error('email') <span id="job-application-email-error" class="text-sm text-red-600" role="alert">{{ $message }}</span> @enderror
             </label>
         </div>
 
         <label class="grid gap-2">
             <span class="text-sm font-medium text-slate-700">Phone</span>
-            <input wire:model.live="phone" type="text" class="rounded-2xl border-stone-300 bg-stone-50 px-4 py-3 text-sm focus:border-amber-500 focus:ring-amber-500/20" />
-            @error('phone') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
+            <input wire:model.live="phone" type="text" aria-invalid="{{ $errors->has('phone') ? 'true' : 'false' }}" aria-describedby="job-application-phone-error" class="rounded-2xl border-stone-300 bg-stone-50 px-4 py-3 text-sm focus:border-amber-500 focus:ring-amber-500/20" />
+            @error('phone') <span id="job-application-phone-error" class="text-sm text-red-600" role="alert">{{ $message }}</span> @enderror
         </label>
 
         <label class="grid gap-2">
             <span class="text-sm font-medium text-slate-700">Resume</span>
-            <input wire:model.live="resume" type="file" accept=".pdf,.doc,.docx" class="rounded-2xl border-stone-300 bg-stone-50 px-4 py-3 text-sm file:mr-4 file:rounded-full file:border-0 file:bg-slate-950 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-stone-50 focus:border-amber-500 focus:ring-amber-500/20" />
-            @error('resume') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
+            <input wire:model.live="resume" type="file" accept=".pdf,.doc,.docx" aria-invalid="{{ $errors->has('resume') ? 'true' : 'false' }}" aria-describedby="job-application-resume-error" class="rounded-2xl border-stone-300 bg-stone-50 px-4 py-3 text-sm file:mr-4 file:rounded-full file:border-0 file:bg-slate-950 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-stone-50 focus:border-amber-500 focus:ring-amber-500/20" />
+            @error('resume') <span id="job-application-resume-error" class="text-sm text-red-600" role="alert">{{ $message }}</span> @enderror
         </label>
 
         <label class="grid gap-2">
             <span class="text-sm font-medium text-slate-700">Cover letter</span>
-            <textarea wire:model.live="coverLetter" rows="6" class="rounded-2xl border-stone-300 bg-stone-50 px-4 py-3 text-sm focus:border-amber-500 focus:ring-amber-500/20"></textarea>
-            @error('coverLetter') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
+            <textarea wire:model.live="coverLetter" rows="6" aria-invalid="{{ $errors->has('coverLetter') ? 'true' : 'false' }}" aria-describedby="job-application-cover-letter-error" class="rounded-2xl border-stone-300 bg-stone-50 px-4 py-3 text-sm focus:border-amber-500 focus:ring-amber-500/20"></textarea>
+            @error('coverLetter') <span id="job-application-cover-letter-error" class="text-sm text-red-600" role="alert">{{ $message }}</span> @enderror
         </label>
 
         <div class="pt-2">

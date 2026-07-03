@@ -35,10 +35,12 @@ class ContactForm extends Component
             'source_page' => request()->path() ?: '/',
         ]);
 
-        $adminEmail = User::role('Admin')->value('email') ?? config('mail.from.address');
+        $admin = User::role('Admin')->first();
 
-        if ($adminEmail) {
-            Notification::route('mail', $adminEmail)->notify(new AdminContactSubmissionNotification($submission));
+        if ($admin) {
+            $admin->notify(new AdminContactSubmissionNotification($submission));
+        } elseif (config('mail.from.address')) {
+            Notification::route('mail', config('mail.from.address'))->notify(new AdminContactSubmissionNotification($submission));
         }
 
         $this->reset(['name', 'email', 'phone', 'message']);

@@ -46,6 +46,8 @@ Route::prefix('careers')->name('careers.')->group(function (): void {
 
 Route::get('/faqs', [PublicSiteController::class, 'faqs'])->name('faqs.index');
 Route::get('/contact', [PublicSiteController::class, 'contact'])->name('contact');
+Route::get('/robots.txt', [PublicSiteController::class, 'robots'])->name('robots');
+Route::get('/sitemap.xml', [PublicSiteController::class, 'sitemap'])->name('sitemap');
 
 if (app()->environment('local')) {
     Route::view('/style-guide', 'pages.style-guide')->name('style-guide');

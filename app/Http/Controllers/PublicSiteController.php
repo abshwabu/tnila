@@ -9,6 +9,7 @@ use App\Models\JobListing;
 use App\Models\Project;
 use App\Models\Service;
 use App\Models\Testimonial;
+use Illuminate\Http\Response;
 use Illuminate\View\View;
 
 class PublicSiteController extends Controller
@@ -203,5 +204,95 @@ class PublicSiteController extends Controller
     public function contact(): View
     {
         return view('pages.contact');
+    }
+
+    public function robots(): Response
+    {
+        $content = implode(PHP_EOL, [
+            'User-agent: *',
+            'Allow: /',
+            'Sitemap: ' . route('sitemap'),
+        ]);
+
+        return response($content . PHP_EOL, 200)->header('Content-Type', 'text/plain');
+    }
+
+    public function sitemap(): Response
+    {
+        $pages = collect([
+            ['loc' => route('home'), 'lastmod' => now()],
+            ['loc' => route('about.index'), 'lastmod' => now()],
+            ['loc' => route('about.story'), 'lastmod' => now()],
+            ['loc' => route('about.mission'), 'lastmod' => now()],
+            ['loc' => route('about.team'), 'lastmod' => now()],
+            ['loc' => route('services.index'), 'lastmod' => now()],
+            ['loc' => route('industries.index'), 'lastmod' => now()],
+            ['loc' => route('projects.index'), 'lastmod' => now()],
+            ['loc' => route('testimonials.index'), 'lastmod' => now()],
+            ['loc' => route('blog.index'), 'lastmod' => now()],
+            ['loc' => route('careers.index'), 'lastmod' => now()],
+            ['loc' => route('faqs.index'), 'lastmod' => now()],
+            ['loc' => route('contact'), 'lastmod' => now()],
+        ]);
+
+        $servicePages = Service::query()
+            ->orderBy('order')
+            ->get()
+            ->map(fn (Service $service): array => [
+                'loc' => route('services.show', $service),
+                'lastmod' => now(),
+            ]);
+
+        $industryPages = Industry::query()
+            ->orderBy('name')
+            ->get()
+            ->flatMap(fn (Industry $industry): array => [
+                [
+                    'loc' => route('industries.show', $industry),
+                    'lastmod' => now(),
+                ],
+                [
+                    'loc' => route('projects.by-industry', $industry),
+                    'lastmod' => now(),
+                ],
+            ]);
+
+        $projectPages = Project::query()
+            ->latest('updated_at')
+            ->get()
+            ->map(fn (Project $project): array => [
+                'loc' => route('projects.show', $project),
+                'lastmod' => $project->updated_at ?? $project->created_at ?? now(),
+            ]);
+
+        $blogPages = BlogPost::query()
+            ->where('status', 'published')
+            ->whereNotNull('published_at')
+            ->latest('published_at')
+            ->get()
+            ->map(fn (BlogPost $post): array => [
+                'loc' => route('blog.show', $post),
+                'lastmod' => $post->published_at ?? now(),
+            ]);
+
+        $careerPages = JobListing::query()
+            ->where('status', 'open')
+            ->orderByDesc('id')
+            ->get()
+            ->map(fn (JobListing $job): array => [
+                'loc' => route('careers.show', $job),
+                'lastmod' => now(),
+            ]);
+
+        $xml = view('sitemap.xml', [
+            'pages' => $pages
+                ->merge($servicePages)
+                ->merge($industryPages)
+                ->merge($projectPages)
+                ->merge($blogPages)
+                ->merge($careerPages),
+        ])->render();
+
+        return response($xml, 200)->header('Content-Type', 'application/xml');
     }
 }

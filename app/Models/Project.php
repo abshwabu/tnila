@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -49,10 +50,28 @@ class Project extends Model implements HasMedia
 
     public function registerMediaConversions(?Media $media = null): void
     {
+        $this->addMediaConversion('thumbnail')
+            ->fit(Fit::Crop, 640, 480)
+            ->quality(82)
+            ->withResponsiveImages()
+            ->performOnCollections('images');
+
+        $this->addMediaConversion('card')
+            ->fit(Fit::Max, 1200, 900)
+            ->quality(84)
+            ->withResponsiveImages()
+            ->performOnCollections('images');
+
+        $this->addMediaConversion('hero')
+            ->fit(Fit::Max, 1800, 1350)
+            ->quality(80)
+            ->withResponsiveImages()
+            ->performOnCollections('images');
+
         $this->addMediaConversion('preview')
-            ->width(1600)
-            ->height(1200)
-            ->sharpen(10);
+            ->fit(Fit::Max, 1600, 1200)
+            ->quality(82)
+            ->performOnCollections('images');
     }
 
     public function getRouteKeyName(): string
@@ -62,6 +81,10 @@ class Project extends Model implements HasMedia
 
     public function featuredImageUrl(): string
     {
+        if ($mediaUrl = $this->getFirstMediaUrl('images', 'card')) {
+            return $mediaUrl;
+        }
+
         if ($mediaUrl = $this->getFirstMediaUrl('images', 'preview')) {
             return $mediaUrl;
         }
@@ -80,6 +103,15 @@ class Project extends Model implements HasMedia
         $index = abs(crc32($this->slug ?: $this->title ?: (string) $this->id)) % count($fallbacks);
 
         return $fallbacks[$index];
+    }
+
+    public function heroImageUrl(): string
+    {
+        if ($mediaUrl = $this->getFirstMediaUrl('images', 'hero')) {
+            return $mediaUrl;
+        }
+
+        return $this->featuredImageUrl();
     }
 
     public function customer()

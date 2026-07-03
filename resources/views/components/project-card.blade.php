@@ -15,6 +15,7 @@
                 alt="{{ $project->title }}"
                 class="h-full w-full object-cover transition duration-500 ease-out group-hover:scale-[1.03]"
                 loading="lazy"
+                decoding="async"
             >
             <div class="absolute inset-0 bg-gradient-to-t from-slate-950/55 via-slate-950/10 to-transparent"></div>
             <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-3 text-white">

@@ -8,7 +8,7 @@
     </div>
 
     @if ($submitted)
-        <div class="mt-6 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
+        <div class="mt-6 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900" role="status" aria-live="polite">
             Thanks, your inquiry has been sent. We’ll get back to you shortly.
         </div>
     @endif
@@ -17,26 +17,26 @@
         <div class="grid gap-4 md:grid-cols-2">
             <label class="grid gap-2">
                 <span class="text-sm font-medium text-slate-700">Name</span>
-                <input wire:model="name" type="text" class="rounded-2xl border border-stone-300 px-4 py-3 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20" />
-                @error('name') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
+                <input wire:model="name" type="text" aria-invalid="{{ $errors->has('name') ? 'true' : 'false' }}" aria-describedby="legacy-inquiry-name-error" class="rounded-2xl border border-stone-300 px-4 py-3 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20" />
+                @error('name') <span id="legacy-inquiry-name-error" class="text-sm text-red-600" role="alert">{{ $message }}</span> @enderror
             </label>
             <label class="grid gap-2">
                 <span class="text-sm font-medium text-slate-700">Email</span>
-                <input wire:model="email" type="email" class="rounded-2xl border border-stone-300 px-4 py-3 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20" />
-                @error('email') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
+                <input wire:model="email" type="email" aria-invalid="{{ $errors->has('email') ? 'true' : 'false' }}" aria-describedby="legacy-inquiry-email-error" class="rounded-2xl border border-stone-300 px-4 py-3 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20" />
+                @error('email') <span id="legacy-inquiry-email-error" class="text-sm text-red-600" role="alert">{{ $message }}</span> @enderror
             </label>
         </div>
 
         <label class="grid gap-2">
             <span class="text-sm font-medium text-slate-700">Phone</span>
-            <input wire:model="phone" type="text" class="rounded-2xl border border-stone-300 px-4 py-3 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20" />
-            @error('phone') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
+            <input wire:model="phone" type="text" aria-invalid="{{ $errors->has('phone') ? 'true' : 'false' }}" aria-describedby="legacy-inquiry-phone-error" class="rounded-2xl border border-stone-300 px-4 py-3 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20" />
+            @error('phone') <span id="legacy-inquiry-phone-error" class="text-sm text-red-600" role="alert">{{ $message }}</span> @enderror
         </label>
 
         <label class="grid gap-2">
             <span class="text-sm font-medium text-slate-700">Project details</span>
-            <textarea wire:model="message" rows="5" class="rounded-2xl border border-stone-300 px-4 py-3 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20"></textarea>
-            @error('message') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
+            <textarea wire:model="message" rows="5" aria-invalid="{{ $errors->has('message') ? 'true' : 'false' }}" aria-describedby="legacy-inquiry-message-error" class="rounded-2xl border border-stone-300 px-4 py-3 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20"></textarea>
+            @error('message') <span id="legacy-inquiry-message-error" class="text-sm text-red-600" role="alert">{{ $message }}</span> @enderror
         </label>
 
         <div>

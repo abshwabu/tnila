@@ -5,12 +5,15 @@
             <h2 class="mt-3 font-display text-3xl text-slate-950">Find answers faster</h2>
         </div>
 
-        <select wire:model.live="category" class="min-w-56 rounded-full border-stone-300 bg-stone-50 px-4 py-3 text-sm focus:border-amber-500 focus:ring-amber-500/20">
-            <option value="all">All categories</option>
-            @foreach ($categories as $item)
-                <option value="{{ $item }}">{{ $item }}</option>
-            @endforeach
-        </select>
+        <label class="grid gap-2">
+            <span class="text-sm font-medium text-slate-700">Filter category</span>
+            <select wire:model.live="category" class="min-w-56 rounded-full border-stone-300 bg-stone-50 px-4 py-3 text-sm focus:border-amber-500 focus:ring-amber-500/20">
+                <option value="all">All categories</option>
+                @foreach ($categories as $item)
+                    <option value="{{ $item }}">{{ $item }}</option>
+                @endforeach
+            </select>
+        </label>
     </div>
 
     <div class="space-y-3">

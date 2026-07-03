@@ -14,7 +14,7 @@
 
             <div class="mt-6 grid gap-8 lg:grid-cols-[1fr_0.8fr] lg:items-start">
                 <div class="overflow-hidden rounded-[2rem] border border-stone-200 bg-white shadow-sm">
-                    <img src="{{ $project->featuredImageUrl() }}" alt="{{ $project->title }}" class="aspect-[16/10] w-full object-cover">
+                    <img src="{{ $project->heroImageUrl() }}" alt="{{ $project->title }}" class="aspect-[16/10] w-full object-cover">
                     <div class="p-6 sm:p-8">
                         <p class="text-xs font-semibold uppercase tracking-[0.35em] text-amber-700">{{ $project->industry?->name }}</p>
                         <h1 class="mt-3 font-display text-5xl leading-tight text-slate-950">{{ $project->title }}</h1>

@@ -6,6 +6,7 @@ use App\Filament\Resources\CustomerResource\Pages;
 use App\Filament\Resources\CustomerResource\RelationManagers\ProjectsRelationManager;
 use App\Filament\Resources\CustomerResource\RelationManagers\TestimonialsRelationManager;
 use App\Models\Customer;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -54,7 +55,6 @@ class CustomerResource extends Resource
                         ->maxLength(255),
                     TextInput::make('phone')
                         ->tel()
-                        ->mask(fn (TextInput\Mask $mask): TextInput\Mask => $mask->pattern('(000) 000-0000'))
                         ->maxLength(255),
                     TextInput::make('company_name')
                         ->maxLength(255),
@@ -149,8 +149,8 @@ class CustomerResource extends Resource
                     ]),
                 Tables\Filters\Filter::make('created_at')
                     ->form([
-                        Tables\Filters\Components\DatePicker::make('from'),
-                        Tables\Filters\Components\DatePicker::make('until'),
+                        DatePicker::make('from'),
+                        DatePicker::make('until'),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query

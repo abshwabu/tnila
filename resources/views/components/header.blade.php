@@ -14,7 +14,7 @@
 @endphp
 
 <header class="sticky top-0 z-50 border-b border-stone-200/80 bg-stone-50/80 backdrop-blur-2xl">
-    <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8" x-data="{ open: false }">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8" x-data="{ open: false }" @keydown.escape.window="open = false">
         <a href="{{ route('home') }}" class="flex items-center gap-3">
             <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-950 text-sm font-black text-stone-50 shadow-sm shadow-slate-950/10">T</span>
             <div>
@@ -55,7 +55,8 @@
             type="button"
             class="inline-flex items-center justify-center rounded-xl border border-stone-300 bg-white p-3 text-slate-700 transition duration-200 ease-out hover:border-slate-400 hover:bg-stone-100 xl:hidden"
             @click="open = !open"
-            :aria-expanded="open.toString()"
+            :aria-expanded="open"
+            aria-controls="mobile-navigation"
             aria-label="Toggle menu"
         >
             <svg x-show="!open" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -67,7 +68,7 @@
         </button>
     </div>
 
-    <div class="border-t border-stone-200 bg-stone-50 px-6 py-5 xl:hidden" x-show="open" x-cloak x-transition.opacity.duration.200ms>
+    <div id="mobile-navigation" class="border-t border-stone-200 bg-stone-50 px-6 py-5 xl:hidden" x-show="open" x-cloak x-transition.opacity.duration.200ms>
         <div class="mx-auto grid max-w-7xl gap-4 text-sm font-medium text-slate-700">
             @foreach ($links as $link)
                 <a href="{{ $link['href'] }}" class="card-surface px-4 py-3 text-slate-700 card-surface-hover">{{ $link['label'] }}</a>

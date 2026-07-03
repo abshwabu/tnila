@@ -1,12 +1,21 @@
-<section class="rounded-[2rem] border border-stone-200 bg-white p-6 shadow-sm sm:p-8" wire:poll.8s="next">
+<section
+    class="rounded-[2rem] border border-stone-200 bg-white p-6 shadow-sm sm:p-8"
+    wire:poll.8s="next"
+    x-data
+    tabindex="0"
+    aria-roledescription="carousel"
+    aria-label="Customer testimonials"
+    @keydown.left.prevent="$wire.previous()"
+    @keydown.right.prevent="$wire.next()"
+>
     <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
             <p class="text-xs font-semibold uppercase tracking-[0.35em] text-amber-700">Client stories</p>
             <h2 class="mt-3 font-display text-3xl text-slate-950">What clients say about the work</h2>
         </div>
         <div class="flex gap-2">
-            <button type="button" wire:click="previous" class="rounded-full border border-stone-200 px-4 py-2 text-sm font-semibold text-slate-700 transition duration-200 ease-out hover:border-stone-300 hover:bg-stone-100">Prev</button>
-            <button type="button" wire:click="next" class="rounded-full border border-slate-950 bg-slate-950 px-4 py-2 text-sm font-semibold text-stone-50 transition duration-200 ease-out hover:bg-slate-800">Next</button>
+            <button type="button" wire:click="previous" aria-label="Previous testimonial" class="rounded-full border border-stone-200 px-4 py-2 text-sm font-semibold text-slate-700 transition duration-200 ease-out hover:border-stone-300 hover:bg-stone-100">Prev</button>
+            <button type="button" wire:click="next" aria-label="Next testimonial" class="rounded-full border border-slate-950 bg-slate-950 px-4 py-2 text-sm font-semibold text-stone-50 transition duration-200 ease-out hover:bg-slate-800">Next</button>
         </div>
     </div>
 
