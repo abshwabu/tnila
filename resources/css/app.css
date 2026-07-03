@@ -3,11 +3,22 @@
 @tailwind utilities;
 
 @layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
     [x-cloak] {
         display: none !important;
     }
 
     body {
         @apply bg-stone-50 text-slate-900;
+        background-image:
+            radial-gradient(circle at top left, rgba(180, 83, 9, 0.06), transparent 28%),
+            radial-gradient(circle at bottom right, rgba(15, 23, 42, 0.04), transparent 30%);
+    }
+
+    ::selection {
+        @apply bg-amber-200 text-slate-950;
     }
 }
