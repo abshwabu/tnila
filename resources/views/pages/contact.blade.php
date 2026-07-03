@@ -24,7 +24,7 @@
                         </div>
                         <div class="rounded-[1.5rem] border border-stone-200 bg-white p-5 shadow-sm">
                             <p class="text-sm font-semibold text-slate-950">Office</p>
-                            <p class="mt-1 text-sm text-slate-600">Nairobi, Kenya</p>
+                            <p class="mt-1 text-sm text-slate-600">Addis Ababa, Ethiopia</p>
                         </div>
                     </div>
                 </div>

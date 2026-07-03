@@ -61,7 +61,7 @@
             <div class="space-y-2">
                 <p><span class="font-semibold text-stone-200">Email:</span> info@tnila.test</p>
                 <p><span class="font-semibold text-stone-200">Phone:</span> +254 700 000 000</p>
-                <p><span class="font-semibold text-stone-200">Office:</span> Nairobi, Kenya</p>
+                <p><span class="font-semibold text-stone-200">Office:</span> Addis Ababa, Ethiopia</p>
             </div>
             <div class="space-y-2 md:text-right">
                 <p><span class="font-semibold text-stone-200">Admin:</span> <a href="/admin" class="text-amber-300 transition duration-200 ease-out hover:text-amber-200">/admin</a></p>
