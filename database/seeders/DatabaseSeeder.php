@@ -11,13 +11,31 @@ use App\Models\JobApplication;
 use App\Models\JobListing;
 use App\Models\Project;
 use App\Models\Service;
+use App\Models\User;
 use App\Models\Testimonial;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        $adminUser = User::query()->updateOrCreate(
+            ['email' => 'admin@tnila.test'],
+            [
+                'name' => 'Admin',
+                'password' => Hash::make('password'),
+                'email_verified_at' => now(),
+            ]
+        );
+
+        if (Schema::hasTable(config('permission.table_names.roles', 'roles'))) {
+            $adminRole = Role::findOrCreate('Admin');
+            $adminUser->syncRoles([$adminRole]);
+        }
+
         $industries = collect([
             Industry::query()->updateOrCreate(
                 ['name' => 'Residential'],
