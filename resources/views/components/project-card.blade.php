@@ -7,7 +7,7 @@
     $href = $href ?? route('projects.show', $project);
 @endphp
 
-<article class="group overflow-hidden rounded-[1.75rem] border border-stone-200 bg-white shadow-sm transition duration-200 ease-out hover:-translate-y-1 hover:border-amber-200 hover:shadow-lg hover:shadow-slate-950/5">
+<article class="group overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm transition duration-200 ease-out hover:-translate-y-1 hover:border-amber-200 hover:shadow-lg hover:shadow-slate-950/5">
     <a href="{{ $href }}" class="block">
         <div class="relative aspect-[4/3] overflow-hidden bg-slate-100">
             <img

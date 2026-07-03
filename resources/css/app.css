@@ -3,22 +3,126 @@
 @tailwind utilities;
 
 @layer base {
+    :root {
+        --site-bg: 40 33 28;
+        --site-surface: 255 252 247;
+        --site-surface-2: 248 244 238;
+        --site-ink: 15 23 42;
+        --site-muted: 100 116 139;
+        --site-border: 228 221 211;
+        --site-accent: 234 127 34;
+        --site-accent-strong: 207 100 9;
+        --site-amber-soft: 255 244 227;
+        --section-max: 80rem;
+    }
+
     html {
         scroll-behavior: smooth;
+    }
+
+    body {
+        @apply min-h-screen font-sans antialiased;
+        color: rgb(var(--site-ink));
+        background:
+            radial-gradient(circle at top left, rgba(234, 127, 34, 0.08), transparent 28%),
+            radial-gradient(circle at bottom right, rgba(15, 23, 42, 0.045), transparent 32%),
+            linear-gradient(180deg, rgb(var(--site-surface)) 0%, rgb(251 248 242) 40%, rgb(247 244 239) 100%);
+    }
+
+    ::selection {
+        @apply bg-amber-200 text-slate-950;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+        @apply font-display tracking-tight text-slate-950;
     }
 
     [x-cloak] {
         display: none !important;
     }
 
-    body {
-        @apply bg-stone-50 text-slate-900;
-        background-image:
-            radial-gradient(circle at top left, rgba(180, 83, 9, 0.06), transparent 28%),
-            radial-gradient(circle at bottom right, rgba(15, 23, 42, 0.04), transparent 30%);
+    img {
+        display: block;
+    }
+}
+
+@layer base {
+}
+
+@layer components {
+    .page-section {
+        @apply px-6 py-16 lg:px-8 lg:py-20;
     }
 
-    ::selection {
-        @apply bg-amber-200 text-slate-950;
+    .section-shell {
+        @apply mx-auto max-w-7xl;
+    }
+
+    .section-kicker {
+        @apply text-xs font-semibold uppercase tracking-[0.35em] text-amber-700;
+    }
+
+    .section-title {
+        @apply mt-3 text-3xl sm:text-4xl;
+    }
+
+    .section-copy {
+        @apply mt-6 max-w-3xl text-base leading-8 text-slate-600 sm:text-lg;
+    }
+
+    .accent-rule {
+        @apply mx-auto my-0 h-px max-w-7xl bg-gradient-to-r from-transparent via-amber-500/70 to-transparent;
+    }
+
+    .card-surface {
+        @apply rounded-2xl border border-stone-200 bg-white shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition duration-200 ease-out;
+    }
+
+    .card-surface-hover {
+        @apply hover:-translate-y-1 hover:border-amber-200 hover:shadow-lg hover:shadow-slate-950/5;
+    }
+
+    .btn-base {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        border-radius: 0.75rem;
+        padding: 0.75rem 1.25rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        transition: all 200ms ease-out;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        @apply border border-amber-500/50 bg-amber-500 text-slate-950 hover:border-amber-400 hover:bg-amber-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/30 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-50;
+    }
+
+    .btn-secondary {
+        @apply border border-slate-900/10 bg-transparent text-slate-950 hover:border-slate-300 hover:bg-stone-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/20 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-50;
+    }
+
+    .btn-dark {
+        @apply border border-slate-950 bg-slate-950 text-stone-50 hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/20 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-50;
+    }
+
+    .reveal {
+        @apply transition duration-500 ease-out motion-reduce:transition-none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 }

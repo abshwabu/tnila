@@ -13,13 +13,13 @@
     $active = fn (string $routeName): bool => request()->routeIs($routeName);
 @endphp
 
-<header class="sticky top-0 z-50 border-b border-stone-200/80 bg-stone-50/90 backdrop-blur-xl">
+<header class="sticky top-0 z-50 border-b border-stone-200/80 bg-stone-50/80 backdrop-blur-2xl">
     <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8" x-data="{ open: false }">
         <a href="{{ route('home') }}" class="flex items-center gap-3">
             <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-950 text-sm font-black text-stone-50 shadow-sm shadow-slate-950/10">T</span>
             <div>
                 <p class="text-[0.7rem] font-semibold uppercase tracking-[0.35em] text-amber-700">Tnila</p>
-                <p class="text-sm font-semibold text-slate-900">Construction Company</p>
+                <p class="text-sm font-semibold tracking-tight text-slate-950">Construction Company</p>
             </div>
         </a>
 
@@ -47,13 +47,13 @@
         </nav>
 
         <div class="hidden items-center gap-3 xl:flex">
-            <x-button href="{{ route('contact') }}" variant="secondary">Start a project</x-button>
-            <a href="/admin" class="rounded-full border border-stone-300 px-4 py-3 text-sm font-semibold text-slate-700 transition duration-200 ease-out hover:border-slate-400 hover:bg-stone-100">Admin</a>
+            <x-button href="{{ route('contact') }}">Start a project</x-button>
+            <a href="/admin" class="btn-base btn-secondary">Admin</a>
         </div>
 
         <button
             type="button"
-            class="inline-flex items-center justify-center rounded-full border border-stone-300 bg-white p-3 text-slate-700 transition duration-200 ease-out hover:border-slate-400 hover:bg-stone-100 xl:hidden"
+            class="inline-flex items-center justify-center rounded-xl border border-stone-300 bg-white p-3 text-slate-700 transition duration-200 ease-out hover:border-slate-400 hover:bg-stone-100 xl:hidden"
             @click="open = !open"
             :aria-expanded="open.toString()"
             aria-label="Toggle menu"
@@ -67,13 +67,13 @@
         </button>
     </div>
 
-    <div class="border-t border-stone-200 bg-stone-50 px-6 py-5 xl:hidden" x-show="open" x-cloak x-transition>
+    <div class="border-t border-stone-200 bg-stone-50 px-6 py-5 xl:hidden" x-show="open" x-cloak x-transition.opacity.duration.200ms>
         <div class="mx-auto grid max-w-7xl gap-4 text-sm font-medium text-slate-700">
             @foreach ($links as $link)
-                <a href="{{ $link['href'] }}" class="rounded-2xl border border-stone-200 bg-white px-4 py-3 transition duration-200 ease-out hover:border-stone-300 hover:bg-stone-100">{{ $link['label'] }}</a>
+                <a href="{{ $link['href'] }}" class="card-surface px-4 py-3 text-slate-700 card-surface-hover">{{ $link['label'] }}</a>
             @endforeach
-            <x-button href="{{ route('contact') }}" variant="secondary" class="justify-center">Start a project</x-button>
-            <a href="/admin" class="rounded-2xl border border-stone-200 bg-white px-4 py-3 text-center transition duration-200 ease-out hover:border-stone-300 hover:bg-stone-100">Admin</a>
+            <x-button href="{{ route('contact') }}">Start a project</x-button>
+            <a href="/admin" class="btn-base btn-secondary justify-center">Admin</a>
         </div>
     </div>
 </header>

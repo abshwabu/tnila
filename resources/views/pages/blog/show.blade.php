@@ -30,7 +30,7 @@
                     @if ($post->cover_image)
                         <img src="{{ asset($post->cover_image) }}" alt="{{ $post->title }}" class="h-full w-full object-cover">
                     @else
-                        <div class="h-full w-full bg-[radial-gradient(circle_at_top_right,rgba(251,191,36,0.25),transparent_30%),linear-gradient(135deg,#0f172a,#1e293b_55%,#451a03)]"></div>
+                        <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1600&q=80" alt="{{ $post->title }}" class="h-full w-full object-cover">
                     @endif
                 </div>
                 <div class="p-6 sm:p-8">

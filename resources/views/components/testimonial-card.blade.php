@@ -1,6 +1,6 @@
 @props(['testimonial'])
 
-<article class="rounded-[1.75rem] border border-stone-200 bg-white p-6 shadow-sm">
+<article class="card-surface p-6">
     <div class="flex items-center gap-1 text-amber-500">
         @for ($i = 0; $i < 5; $i++)
             <svg viewBox="0 0 20 20" class="h-4 w-4 fill-current" aria-hidden="true">

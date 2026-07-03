@@ -46,3 +46,7 @@ Route::prefix('careers')->name('careers.')->group(function (): void {
 
 Route::get('/faqs', [PublicSiteController::class, 'faqs'])->name('faqs.index');
 Route::get('/contact', [PublicSiteController::class, 'contact'])->name('contact');
+
+if (app()->environment('local')) {
+    Route::view('/style-guide', 'pages.style-guide')->name('style-guide');
+}
