@@ -80,18 +80,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="grid grid-cols-3 gap-4">
-                    <div class="rounded-2xl border border-stone-200 bg-slate-950 p-5 text-stone-50 shadow-sm">
-                        <p class="text-3xl font-bold">{{ $industryCount }}</p>
-                        <p class="mt-2 text-xs uppercase tracking-[0.25em] text-stone-400">Industries</p>
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
+                    <div class="rounded-2xl border border-stone-200 bg-slate-950 p-4 sm:p-5 text-stone-50 shadow-sm">
+                        <p class="text-2xl sm:text-3xl font-bold">{{ $industryCount }}</p>
+                        <p class="mt-1 sm:mt-2 text-xs uppercase tracking-[0.2em] sm:tracking-[0.25em] text-stone-400">Industries</p>
                     </div>
-                    <div class="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm">
-                        <p class="text-3xl font-bold text-slate-950">{{ $services->count() }}</p>
-                        <p class="mt-2 text-xs uppercase tracking-[0.25em] text-slate-500">Services</p>
+                    <div class="rounded-2xl border border-stone-200 bg-white p-4 sm:p-5 shadow-sm">
+                        <p class="text-2xl sm:text-3xl font-bold text-slate-950">{{ $services->count() }}</p>
+                        <p class="mt-1 sm:mt-2 text-xs uppercase tracking-[0.2em] sm:tracking-[0.25em] text-slate-500">Services</p>
                     </div>
-                    <div class="rounded-2xl border border-amber-200 bg-amber-50 p-5 shadow-sm">
-                        <p class="text-3xl font-bold text-amber-900">24h</p>
-                        <p class="mt-2 text-xs uppercase tracking-[0.25em] text-amber-700">Response</p>
+                    <div class="rounded-2xl border border-amber-200 bg-amber-50 p-4 sm:p-5 shadow-sm">
+                        <p class="text-2xl sm:text-3xl font-bold text-amber-900">24h</p>
+                        <p class="mt-1 sm:mt-2 text-xs uppercase tracking-[0.2em] sm:tracking-[0.25em] text-amber-700">Response</p>
                     </div>
                 </div>
             </div>

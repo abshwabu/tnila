@@ -13,8 +13,8 @@
     $active = fn (string $routeName): bool => request()->routeIs($routeName);
 @endphp
 
-<header class="sticky top-0 z-50 border-b border-stone-200/80 bg-stone-50/80 backdrop-blur-2xl">
-    <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8" x-data="{ open: false }" @keydown.escape.window="open = false">
+<header class="sticky top-0 z-50 border-b border-stone-200/80 bg-stone-50/80 backdrop-blur-2xl" x-data="{ open: false }" @keydown.escape.window="open = false">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
         <a href="{{ route('home') }}" class="flex items-center gap-3">
             <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-950 text-sm font-black text-stone-50 shadow-sm shadow-slate-950/10">T</span>
             <div>
