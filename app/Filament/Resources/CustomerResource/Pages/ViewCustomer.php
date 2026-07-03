@@ -45,7 +45,7 @@ class ViewCustomer extends ViewRecord
                             TextEntry::make('created_at')->dateTime('M j, Y g:i A'),
                             TextEntry::make('updated_at')->dateTime('M j, Y g:i A'),
                             TextEntry::make('projects_count')
-                                ->counts('projects')
+                                ->state(fn ($record): int => $record->projects()->count())
                                 ->label('Projects'),
                         ]),
                     ]),
