@@ -17,20 +17,39 @@
     use App\Support\Site;
 
     $style = is_array($section?->style) ? $section->style : [];
+    $content = is_array($section?->content) ? $section->content : [];
 
     $resolvedAnchor = $anchor ?? $id ?? $section?->anchor ?? $section?->key;
-    $bgType = $style['background_type'] ?? 'none';
     $resolvedBgColor = $backgroundColor ?? $style['background_color'] ?? null;
-    $resolvedBgImage = $backgroundImage ?? $style['background_image'] ?? null;
+    $resolvedBgImage = $backgroundImage ?? $style['background_image'] ?? $content['background_image'] ?? null;
+    $bgType = $style['background_type'] ?? 'none';
+    if ($bgType === 'none' && filled($resolvedBgImage)) {
+        $bgType = 'image';
+    }
+
     $resolvedOverlay = $backgroundOverlay ?? $style['overlay_opacity'] ?? null;
     $resolvedGradient = $style['background_gradient'] ?? null;
     $resolvedTextTheme = $textTheme ?? $style['text_theme'] ?? null;
     $resolvedPadding = $paddingSize ?? $style['vertical_padding'] ?? 'm';
     $resolvedAlignment = $alignment ?? $style['alignment'] ?? 'left';
 
+    $bgImageUrl = filled($resolvedBgImage) ? Site::imageUrl($resolvedBgImage) : null;
+
+    $overlayOpacity = match ($resolvedOverlay) {
+        'light' => 0.20,
+        'medium' => 0.50,
+        'dark' => 0.75,
+        'heavy' => 0.90,
+        default => ($bgType === 'image' ? 0.45 : 0.0),
+    };
+
     // Auto-detect text theme if not forced
-    if (empty($resolvedTextTheme) && filled($resolvedBgColor)) {
-        $resolvedTextTheme = ColorHelper::isDark($resolvedBgColor) ? 'dark' : 'light';
+    if (empty($resolvedTextTheme)) {
+        if ($bgType === 'image') {
+            $resolvedTextTheme = 'dark';
+        } elseif (filled($resolvedBgColor)) {
+            $resolvedTextTheme = ColorHelper::isDark($resolvedBgColor) ? 'dark' : 'light';
+        }
     }
 
     $isDarkTheme = ($resolvedTextTheme === 'dark');
@@ -44,23 +63,13 @@
     };
 
     $themeClasses = $isDarkTheme
-        ? 'text-stone-50 [&_.section-title]:text-white [&_.section-copy]:text-stone-300 [&_.section-kicker]:text-amber-300'
+        ? 'text-stone-50 [&_.section-title]:text-white [&_h1]:text-white [&_.section-copy]:text-stone-300 [&_.section-kicker]:text-amber-300'
         : 'text-slate-900 [&_.section-title]:text-slate-950 [&_.section-copy]:text-slate-600 [&_.section-kicker]:text-amber-700';
 
     $alignmentClasses = match ($resolvedAlignment) {
         'center' => 'text-center items-center justify-center',
         'right' => 'text-right items-end justify-end',
         default => 'text-left',
-    };
-
-    $bgImageUrl = filled($resolvedBgImage) ? Site::imageUrl($resolvedBgImage) : null;
-
-    $overlayOpacity = match ($resolvedOverlay) {
-        'light' => 0.20,
-        'medium' => 0.50,
-        'dark' => 0.75,
-        'heavy' => 0.90,
-        default => 0.0,
     };
 
     $styleAttribute = '';

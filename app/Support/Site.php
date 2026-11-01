@@ -216,6 +216,7 @@ class Site
 
     /**
      * Resolve a relative public storage path to a fully-qualified URL with null safety.
+     * Uses asset() so the URL dynamically matches the current request's scheme, host, and port.
      */
     public static function imageUrl(?string $path, ?string $default = null): ?string
     {
@@ -232,6 +233,16 @@ class Site
             return $path;
         }
 
-        return Storage::disk('public')->url($path);
+        $cleanPath = ltrim($path, '/');
+
+        if (str_starts_with($cleanPath, 'storage/')) {
+            return asset($cleanPath);
+        }
+
+        if (file_exists(public_path($cleanPath))) {
+            return asset($cleanPath);
+        }
+
+        return asset('storage/' . $cleanPath);
     }
 }

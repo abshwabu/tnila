@@ -21,8 +21,10 @@
     $bgImage = filled($content['background_image'] ?? null) ? Site::imageUrl($content['background_image']) : null;
 @endphp
 
-<x-section-wrapper :section="$section" anchor="hero" class="pt-14 lg:pt-20">
-    <div class="absolute inset-x-0 top-0 -z-10 h-[44rem] bg-[radial-gradient(circle_at_top_left,rgba(251,191,36,0.16),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(15,23,42,0.08),transparent_30%),linear-gradient(180deg,rgba(255,252,247,0.98),rgba(255,251,247,0.62))] pointer-events-none" aria-hidden="true"></div>
+<x-section-wrapper :section="$section" :background-image="$bgImage" anchor="hero" class="pt-14 lg:pt-20">
+    @if(! $bgImage)
+        <div class="absolute inset-x-0 top-0 -z-10 h-[44rem] bg-[radial-gradient(circle_at_top_left,rgba(251,191,36,0.16),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(15,23,42,0.08),transparent_30%),linear-gradient(180deg,rgba(255,252,247,0.98),rgba(255,251,247,0.62))] pointer-events-none" aria-hidden="true"></div>
+    @endif
     <div class="reveal grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center opacity-0 translate-y-6" x-cloak x-data="{ shown: false }" x-intersect.once="shown = true" :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'">
         <div class="max-w-3xl">
             @if(filled($eyebrow))
@@ -70,7 +72,30 @@
         </div>
 
         <div class="grid gap-4">
-            @if(! empty($collageImages))
+            @if(count($collageImages) === 1)
+                {{-- Single custom hero showcase image --}}
+                <div class="overflow-hidden rounded-[2rem] border border-stone-200 bg-white shadow-sm">
+                    <div class="relative aspect-[4/5]">
+                        <img
+                            src="{{ Site::imageUrl($collageImages[0]) }}"
+                            alt="Construction site"
+                            class="h-full w-full object-cover"
+                        >
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/65 via-slate-950/10 to-transparent"></div>
+                        <div class="absolute inset-x-5 bottom-5 flex items-end justify-between gap-4 text-white">
+                            <div>
+                                <p class="text-xs font-semibold uppercase tracking-[0.25em] text-amber-200">Featured process</p>
+                                <h2 class="mt-2 text-2xl font-semibold tracking-tight">A more organized way to build</h2>
+                            </div>
+                            <div class="rounded-2xl border border-white/15 bg-white/10 px-4 py-3 backdrop-blur-md">
+                                <p class="text-2xl font-bold">{{ \App\Models\Project::count() }}+</p>
+                                <p class="mt-1 text-[0.7rem] uppercase tracking-[0.25em] text-stone-200">Projects delivered</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @elseif(count($collageImages) > 1)
+                {{-- Multi-image photo collage grid --}}
                 <div class="grid grid-cols-2 gap-3">
                     @foreach (array_slice($collageImages, 0, 4) as $img)
                         <div class="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm aspect-square">
@@ -79,6 +104,7 @@
                     @endforeach
                 </div>
             @else
+                {{-- Default fallback image showcase --}}
                 <div class="overflow-hidden rounded-[2rem] border border-stone-200 bg-white shadow-sm">
                     <div class="relative aspect-[4/5]">
                         <img

@@ -364,4 +364,21 @@ class SiteSettingsCustomizationTest extends TestCase
         $blogResponse->assertOk();
         $blogResponse->assertSee('Customized Blog Section Heading For Test');
     }
+
+    public function test_image_url_helper_resolves_storage_and_asset_paths(): void
+    {
+        $this->assertNull(Site::imageUrl(null));
+        $this->assertEquals('/default.jpg', Site::imageUrl(null, '/default.jpg'));
+
+        $external = 'https://images.unsplash.com/photo-test';
+        $this->assertEquals($external, Site::imageUrl($external));
+
+        $storageUrl = Site::imageUrl('sections/hero/photo.png');
+        $this->assertStringContainsString('/storage/sections/hero/photo.png', $storageUrl);
+        $this->assertStringNotContainsString('/storage/storage/', $storageUrl);
+
+        $prefixedUrl = Site::imageUrl('storage/branding/logo.png');
+        $this->assertStringContainsString('/storage/branding/logo.png', $prefixedUrl);
+        $this->assertStringNotContainsString('/storage/storage/', $prefixedUrl);
+    }
 }
