@@ -10,7 +10,7 @@
 <article class="group overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm transition duration-200 ease-out hover:-translate-y-1 hover:border-amber-200 hover:shadow-lg hover:shadow-slate-950/5">
     <a href="{{ $href }}" class="block">
         <div class="relative aspect-[16/10] overflow-hidden bg-slate-900">
-            <img src="{{ $post->cover_image_url }}" alt="{{ $post->title }}" class="h-full w-full object-cover opacity-90 transition duration-500 ease-out group-hover:scale-[1.03]" loading="lazy">
+            <img src="{{ $post->cover_image_url }}" alt="{{ $post->title }}" class="h-full w-full object-cover opacity-90 transition duration-300 ease-out" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent"></div>
             <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-3 text-white">
                 <div>

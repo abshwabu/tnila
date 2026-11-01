@@ -43,16 +43,17 @@
         default => ($bgType === 'image' ? 0.45 : 0.0),
     };
 
-    // Auto-detect text theme if not forced
-    if (empty($resolvedTextTheme)) {
-        if ($bgType === 'image') {
-            $resolvedTextTheme = 'dark';
-        } elseif (filled($resolvedBgColor)) {
-            $resolvedTextTheme = ColorHelper::isDark($resolvedBgColor) ? 'dark' : 'light';
-        }
-    }
+    // Check if section actually has a dark background (image with dark overlay, gradient, or dark solid color)
+    $hasDarkBackground = match ($bgType) {
+        'image' => filled($bgImageUrl),
+        'gradient' => filled($resolvedGradient),
+        'color' => filled($resolvedBgColor) && ColorHelper::isDark($resolvedBgColor),
+        default => false,
+    };
 
-    $isDarkTheme = ($resolvedTextTheme === 'dark');
+    // By default, since the site background is white, text is dark!
+    // Dark theme (light/white text) is only applied when the section actually has a dark background.
+    $isDarkTheme = $hasDarkBackground && ($resolvedTextTheme !== 'light');
 
     $paddingClasses = match (strtolower((string) $resolvedPadding)) {
         'none' => 'py-0',
@@ -63,8 +64,8 @@
     };
 
     $themeClasses = $isDarkTheme
-        ? 'text-stone-50 [&_.section-title]:text-white [&_h1]:text-white [&_.section-copy]:text-stone-300 [&_.section-kicker]:text-amber-300'
-        : 'text-slate-900 [&_.section-title]:text-slate-950 [&_.section-copy]:text-slate-600 [&_.section-kicker]:text-amber-700';
+        ? 'text-stone-50 [&_.section-title]:text-white [&_h1]:text-white [&_h2]:text-white [&_h3]:text-white [&_.section-copy]:text-stone-300 [&_.section-kicker]:text-amber-300'
+        : 'text-slate-900 [&_.section-title]:text-slate-950 [&_h1]:text-slate-950 [&_h2]:text-slate-950 [&_h3]:text-slate-950 [&_.section-copy]:text-slate-600 [&_.section-kicker]:text-amber-700';
 
     $alignmentClasses = match ($resolvedAlignment) {
         'center' => 'text-center items-center justify-center',

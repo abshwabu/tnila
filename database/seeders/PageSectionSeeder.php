@@ -35,7 +35,7 @@ class PageSectionSeeder extends Seeder
                 'style' => [
                     'background_type' => 'none',
                     'background_color' => null,
-                    'text_theme' => 'dark',
+                    'text_theme' => 'light',
                     'vertical_padding' => 'l',
                 ],
             ],
@@ -66,7 +66,7 @@ class PageSectionSeeder extends Seeder
                 'style' => [
                     'background_type' => 'none',
                     'background_color' => null,
-                    'text_theme' => 'dark',
+                    'text_theme' => 'light',
                     'vertical_padding' => 'm',
                 ],
             ],
@@ -92,7 +92,7 @@ class PageSectionSeeder extends Seeder
                 'style' => [
                     'background_type' => 'none',
                     'background_color' => null,
-                    'text_theme' => 'dark',
+                    'text_theme' => 'light',
                     'vertical_padding' => 'm',
                 ],
             ],
@@ -117,7 +117,7 @@ class PageSectionSeeder extends Seeder
                 'style' => [
                     'background_type' => 'none',
                     'background_color' => null,
-                    'text_theme' => 'dark',
+                    'text_theme' => 'light',
                     'vertical_padding' => 'm',
                 ],
             ],
@@ -141,7 +141,7 @@ class PageSectionSeeder extends Seeder
                 'style' => [
                     'background_type' => 'none',
                     'background_color' => null,
-                    'text_theme' => 'dark',
+                    'text_theme' => 'light',
                     'vertical_padding' => 'm',
                 ],
             ],
@@ -166,7 +166,7 @@ class PageSectionSeeder extends Seeder
                 'style' => [
                     'background_type' => 'none',
                     'background_color' => null,
-                    'text_theme' => 'dark',
+                    'text_theme' => 'light',
                     'vertical_padding' => 'm',
                 ],
             ],
@@ -187,7 +187,7 @@ class PageSectionSeeder extends Seeder
                 'style' => [
                     'background_type' => 'none',
                     'background_color' => null,
-                    'text_theme' => 'dark',
+                    'text_theme' => 'light',
                     'vertical_padding' => 'm',
                 ],
             ],
@@ -234,7 +234,7 @@ class PageSectionSeeder extends Seeder
                 'style' => [
                     'background_type' => 'none',
                     'background_color' => null,
-                    'text_theme' => 'dark',
+                    'text_theme' => 'light',
                     'vertical_padding' => 'm',
                 ],
             ],
@@ -255,7 +255,7 @@ class PageSectionSeeder extends Seeder
                 'style' => [
                     'background_type' => 'none',
                     'background_color' => null,
-                    'text_theme' => 'dark',
+                    'text_theme' => 'light',
                     'vertical_padding' => 'm',
                 ],
             ],
@@ -278,7 +278,7 @@ class PageSectionSeeder extends Seeder
                 'style' => [
                     'background_type' => 'none',
                     'background_color' => null,
-                    'text_theme' => 'dark',
+                    'text_theme' => 'light',
                     'vertical_padding' => 'm',
                 ],
             ],

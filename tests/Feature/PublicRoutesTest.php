@@ -113,7 +113,40 @@ class PublicRoutesTest extends TestCase
         ];
 
         foreach ($routes as $route) {
-            $this->get($route)->assertOk();
+            $response = $this->get($route);
+            $response->assertOk();
+            $response->assertDontSee('href="/admin"', false);
+            $response->assertDontSee('>Admin</a>', false);
         }
+    }
+
+    public function test_homepage_has_dark_text_on_white_background_and_fit_images(): void
+    {
+        \App\Models\PageSection::query()->updateOrCreate(
+            ['key' => 'hero'],
+            [
+                'type' => 'hero',
+                'sort_order' => 1,
+                'is_visible' => true,
+                'content' => [
+                    'heading' => 'Hero Heading',
+                    'collage_images' => ['sections/hero/photo.png'],
+                ],
+            ]
+        );
+        \App\Support\Site::flushCache();
+
+        $response = $this->get('/');
+        $response->assertOk();
+        $response->assertDontSee('href="/admin"', false);
+        $response->assertDontSee('>Admin</a>', false);
+
+        // Assert section-title uses dark text classes for high contrast on white background
+        $response->assertSee('text-slate-900', false);
+        $response->assertSee('text-slate-950', false);
+        $response->assertSee('text-slate-600', false);
+
+        // Assert images fit within frames by default
+        $response->assertSee('object-contain', false);
     }
 }

@@ -19,6 +19,8 @@
     $statChips = is_array($content['stat_chips'] ?? null) ? $content['stat_chips'] : [];
     $collageImages = is_array($content['collage_images'] ?? null) ? $content['collage_images'] : [];
     $bgImage = filled($content['background_image'] ?? null) ? Site::imageUrl($content['background_image']) : null;
+    $imageFit = $content['image_fit'] ?? 'contain';
+    $fitClass = $imageFit === 'cover' ? 'object-cover' : 'object-contain';
 @endphp
 
 <x-section-wrapper :section="$section" :background-image="$bgImage" anchor="hero" class="pt-14 lg:pt-20">
@@ -74,14 +76,14 @@
         <div class="grid gap-4">
             @if(count($collageImages) === 1)
                 {{-- Single custom hero showcase image --}}
-                <div class="overflow-hidden rounded-[2rem] border border-stone-200 bg-white shadow-sm">
-                    <div class="relative aspect-[4/5]">
+                <div class="overflow-hidden rounded-[2rem] border border-stone-200 bg-stone-950 shadow-sm">
+                    <div class="relative aspect-[16/10] sm:aspect-[4/3] overflow-hidden flex items-center justify-center p-2">
                         <img
                             src="{{ Site::imageUrl($collageImages[0]) }}"
                             alt="Construction site"
-                            class="h-full w-full object-cover"
+                            class="h-full w-full {{ $fitClass }} rounded-xl"
                         >
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/65 via-slate-950/10 to-transparent"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-transparent pointer-events-none rounded-[2rem]"></div>
                         <div class="absolute inset-x-5 bottom-5 flex items-end justify-between gap-4 text-white">
                             <div>
                                 <p class="text-xs font-semibold uppercase tracking-[0.25em] text-amber-200">Featured process</p>
@@ -98,15 +100,15 @@
                 {{-- Multi-image photo collage grid --}}
                 <div class="grid grid-cols-2 gap-3">
                     @foreach (array_slice($collageImages, 0, 4) as $img)
-                        <div class="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm aspect-square">
-                            <img src="{{ Site::imageUrl($img) }}" alt="Construction work" class="h-full w-full object-cover hover:scale-105 transition duration-300" />
+                        <div class="overflow-hidden rounded-2xl border border-stone-200 bg-stone-100 dark:bg-stone-900 aspect-[16/10] flex items-center justify-center p-1.5 shadow-sm">
+                            <img src="{{ Site::imageUrl($img) }}" alt="Construction work" class="h-full w-full {{ $fitClass }} rounded-xl transition duration-200" />
                         </div>
                     @endforeach
                 </div>
             @else
                 {{-- Default fallback image showcase --}}
-                <div class="overflow-hidden rounded-[2rem] border border-stone-200 bg-white shadow-sm">
-                    <div class="relative aspect-[4/5]">
+                <div class="overflow-hidden rounded-[2rem] border border-stone-200 bg-slate-950 shadow-sm">
+                    <div class="relative aspect-[16/10] sm:aspect-[4/3] overflow-hidden flex items-center justify-center">
                         <img
                             src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1600&q=80"
                             alt="Construction team reviewing plans on site"

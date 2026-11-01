@@ -136,7 +136,7 @@ class Site
             'style' => [
                 'background_type' => 'none',
                 'background_color' => null,
-                'text_theme' => 'dark',
+                'text_theme' => 'light',
                 'vertical_padding' => 'm',
             ],
         ]);

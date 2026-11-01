@@ -9,11 +9,11 @@
 
 <article class="group overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm transition duration-200 ease-out hover:-translate-y-1 hover:border-amber-200 hover:shadow-lg hover:shadow-slate-950/5">
     <a href="{{ $href }}" class="block">
-        <div class="relative aspect-[4/3] overflow-hidden bg-slate-100">
+        <div class="relative aspect-[16/10] overflow-hidden bg-slate-100">
             <img
                 src="{{ $project->featuredImageUrl() }}"
                 alt="{{ $project->title }}"
-                class="h-full w-full object-cover transition duration-500 ease-out group-hover:scale-[1.03]"
+                class="h-full w-full object-cover transition duration-300 ease-out"
                 loading="lazy"
                 decoding="async"
             >

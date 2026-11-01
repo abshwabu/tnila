@@ -125,7 +125,6 @@
                 <p><span class="font-semibold text-stone-200">Office:</span> {{ $address }}</p>
             </div>
             <div class="space-y-2 md:text-right">
-                <p><span class="font-semibold text-stone-200">Admin:</span> <a href="/admin" class="text-amber-300 transition duration-200 ease-out hover:text-amber-200">/admin</a></p>
                 <p>{{ $copyright }}</p>
                 @if(! empty($legalLinks))
                     <div class="flex flex-wrap gap-x-4 gap-y-1 md:justify-end text-xs text-stone-500 pt-1">

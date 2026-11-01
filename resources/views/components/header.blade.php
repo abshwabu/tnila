@@ -94,7 +94,6 @@
             <x-button :href="$ctaUrl" :target="$ctaNewTab ? '_blank' : null" :rel="$ctaNewTab ? 'noopener noreferrer' : null">
                 {{ $ctaLabel }}
             </x-button>
-            <a href="/admin" class="btn-base btn-secondary">Admin</a>
         </div>
 
         <button
@@ -128,7 +127,6 @@
             <x-button :href="$ctaUrl" :target="$ctaNewTab ? '_blank' : null" class="w-full justify-center">
                 {{ $ctaLabel }}
             </x-button>
-            <a href="/admin" class="btn-base btn-secondary justify-center">Admin</a>
         </div>
     </div>
 </header>

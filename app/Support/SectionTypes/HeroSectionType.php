@@ -8,6 +8,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 
@@ -41,6 +42,7 @@ class HeroSectionType extends BaseSectionType
                 ['value' => '24h', 'label' => 'Response Window', 'icon' => 'heroicon-o-clock'],
             ],
             'collage_images' => [],
+            'image_fit' => 'contain',
             'buttons' => [
                 ['label' => 'Get a quote', 'link_type' => 'url', 'target' => null, 'url' => '/contact', 'style' => 'primary'],
                 ['label' => 'View projects', 'link_type' => 'url', 'target' => null, 'url' => '/projects', 'style' => 'ghost'],
@@ -81,6 +83,15 @@ class HeroSectionType extends BaseSectionType
                         ->maxFiles(4)
                         ->maxSize(5120)
                         ->helperText('Visual photo collage showcasing real construction sites and delivered buildings.'),
+
+                    Select::make('content.image_fit')
+                        ->label('Showcase Image Fit')
+                        ->options([
+                            'contain' => 'Fit Frame (Contain - Complete photo visible without cropping/zoom)',
+                            'cover' => 'Fill Frame (Cover - Full bleed cropped to bounds)',
+                        ])
+                        ->default('contain')
+                        ->helperText('Select whether showcase images fit completely inside the frame (default) or zoom to fill.'),
                 ]),
 
             Section::make('Hero Content & Headlines')
