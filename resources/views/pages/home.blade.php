@@ -47,8 +47,12 @@
 @endpush
 
 @section('content')
-    @foreach ($sections as $section)
-        @if ($section->is_visible && view()->exists("landing.sections.{$section->type}"))
+    @php
+        $visibleSections = $sections->filter(fn ($s) => (bool) ($s->is_visible ?? true) && view()->exists("landing.sections.{$s->type}"));
+    @endphp
+
+    @if ($visibleSections->isNotEmpty())
+        @foreach ($visibleSections as $section)
             @include("landing.sections.{$section->type}", [
                 'section' => $section,
                 'settings' => $settings,
@@ -57,6 +61,23 @@
             @if (! $loop->last)
                 <div class="accent-rule" aria-hidden="true"></div>
             @endif
-        @endif
-    @endforeach
+        @endforeach
+    @else
+        {{-- Fail-safe fallback if no sections are found in database or cache --}}
+        @php
+            $fallbackKeys = ['hero', 'about', 'stats', 'services', 'industries', 'projects', 'testimonials', 'cta_banner', 'faq', 'blog', 'contact'];
+        @endphp
+        @foreach ($fallbackKeys as $fallbackKey)
+            @if (view()->exists("landing.sections.{$fallbackKey}"))
+                @include("landing.sections.{$fallbackKey}", [
+                    'section' => Site::section($fallbackKey),
+                    'settings' => $settings,
+                    'items' => $items,
+                ])
+                @if (! $loop->last)
+                    <div class="accent-rule" aria-hidden="true"></div>
+                @endif
+            @endif
+        @endforeach
+    @endif
 @endsection

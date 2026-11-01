@@ -4,6 +4,7 @@ use App\Http\Controllers\PublicSiteController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PublicSiteController::class, 'home'])->name('home');
+Route::redirect('/home', '/');
 
 Route::prefix('about')->name('about.')->group(function (): void {
     Route::get('/', [PublicSiteController::class, 'about'])->name('index');

@@ -39,6 +39,14 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->homeUrl('/')
+            ->navigationItems([
+                \Filament\Navigation\NavigationItem::make('View Live Website')
+                    ->url('/', shouldOpenInNewTab: true)
+                    ->icon('heroicon-o-arrow-top-right-on-square')
+                    ->group('Site')
+                    ->sort(-1),
+            ])
             ->navigationGroups([
                 'Site',
                 'Content',

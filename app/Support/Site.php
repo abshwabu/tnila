@@ -65,7 +65,7 @@ class Site
         try {
             $cached = Cache::get(self::CACHE_SECTIONS_KEY);
 
-            if ($cached instanceof Collection && ! ($cached instanceof \__PHP_Incomplete_Class)) {
+            if ($cached instanceof Collection && $cached->isNotEmpty() && ! ($cached instanceof \__PHP_Incomplete_Class)) {
                 return $cached;
             }
         } catch (Throwable) {
@@ -78,14 +78,28 @@ class Site
                 ->ordered()
                 ->get()
                 ->keyBy('key');
+
+            // If empty, auto-seed default sections so the page is never blank
+            if ($sections->isEmpty()) {
+                if (PageSection::query()->count() === 0) {
+                    (new \Database\Seeders\PageSectionSeeder())->run();
+                    $sections = PageSection::query()
+                        ->visible()
+                        ->ordered()
+                        ->get()
+                        ->keyBy('key');
+                }
+            }
         } catch (Throwable) {
             $sections = collect();
         }
 
-        try {
-            Cache::forever(self::CACHE_SECTIONS_KEY, $sections);
-        } catch (Throwable) {
-            // Ignore cache storage failure
+        if ($sections->isNotEmpty()) {
+            try {
+                Cache::forever(self::CACHE_SECTIONS_KEY, $sections);
+            } catch (Throwable) {
+                // Ignore cache storage failure
+            }
         }
 
         return $sections;
@@ -102,19 +116,23 @@ class Site
             return $section;
         }
 
+        try {
+            $dbSection = PageSection::query()->where('key', $key)->first();
+            if ($dbSection instanceof PageSection) {
+                return $dbSection;
+            }
+        } catch (Throwable) {
+            // Ignore DB error
+        }
+
         return new PageSection([
             'key' => $key,
             'type' => $key,
             'sort_order' => 0,
             'is_visible' => true,
-            'nav_label' => null,
+            'nav_label' => ucfirst(str_replace('_', ' ', $key)),
             'anchor' => $key,
-            'content' => [
-                'eyebrow' => null,
-                'heading' => null,
-                'subheading' => null,
-                'body' => null,
-            ],
+            'content' => SectionTypes::defaultContent($key),
             'style' => [
                 'background_type' => 'none',
                 'background_color' => null,
