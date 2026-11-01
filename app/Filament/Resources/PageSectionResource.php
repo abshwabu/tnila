@@ -174,6 +174,7 @@ class PageSectionResource extends Resource
                                             ->disk('public')
                                             ->directory('sections/backgrounds')
                                             ->image()
+                                            ->imageEditor()
                                             ->maxSize(5120)
                                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                                             ->visible(fn (Get $get): bool => $get('style.background_type') === 'image')
@@ -254,6 +255,20 @@ class PageSectionResource extends Resource
                     ->label('#')
                     ->sortable()
                     ->width('50px'),
+
+                Tables\Columns\ImageColumn::make('thumbnail')
+                    ->label('Visual')
+                    ->state(function (PageSection $record): ?string {
+                        $rawPath = $record->content['background_image']
+                            ?? $record->style['background_image']
+                            ?? ($record->content['collage_images'][0] ?? null)
+                            ?? ($record->content['images'][0] ?? null);
+
+                        return Site::imageUrl($rawPath);
+                    })
+                    ->checkFileExistence(false)
+                    ->circular()
+                    ->defaultImageUrl(asset('favicon.ico')),
 
                 TextColumn::make('nav_label')
                     ->label('Navigation Label')

@@ -68,6 +68,7 @@ class AboutSectionType extends BaseSectionType
                         ->disk('public')
                         ->directory('sections/about')
                         ->image()
+                        ->imageEditor()
                         ->multiple()
                         ->maxFiles(6)
                         ->maxSize(5120)

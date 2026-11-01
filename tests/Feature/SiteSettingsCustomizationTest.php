@@ -5,15 +5,21 @@ declare(strict_types=1);
 namespace Tests\Feature;
 
 use App\Filament\Pages\SiteSettings;
+use App\Filament\Resources\BlogPostResource\Pages\ListBlogPosts;
 use App\Filament\Resources\PageSectionResource\Pages\EditPageSection;
 use App\Filament\Resources\PageSectionResource\Pages\ListPageSections;
+use App\Filament\Resources\ProjectResource\Pages\ListProjects;
+use App\Models\BlogPost;
+use App\Models\Industry;
 use App\Models\PageSection;
+use App\Models\Project;
 use App\Models\SiteSetting;
 use App\Models\User;
 use App\Support\ColorHelper;
 use App\Support\Site;
 use Filament\Facades\Filament;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
@@ -380,5 +386,61 @@ class SiteSettingsCustomizationTest extends TestCase
         $prefixedUrl = Site::imageUrl('storage/branding/logo.png');
         $this->assertStringContainsString('/storage/branding/logo.png', $prefixedUrl);
         $this->assertStringNotContainsString('/storage/storage/', $prefixedUrl);
+    }
+
+    public function test_dashboard_image_columns_render_reliably(): void
+    {
+        $industry = Industry::factory()->create(['name' => 'Commercial Construction']);
+
+        $project = Project::create([
+            'title' => 'Skyline Tower',
+            'industry_id' => $industry->id,
+            'description' => 'A premier modern construction project.',
+            'status' => 'completed',
+            'start_date' => now()->subMonths(6),
+            'location' => 'Addis Ababa',
+            'featured' => true,
+        ]);
+
+        $post = BlogPost::create([
+            'title' => 'Top Engineering Trends',
+            'category' => 'Engineering',
+            'author_name' => 'Sarah Jenkins',
+            'content' => 'Full article detailing construction and engineering innovations.',
+            'status' => 'published',
+            'published_at' => now(),
+            'cover_image' => 'sections/hero/collage/01M6CBZ7ZRQJB55GTBKXDJEEBV.png',
+        ]);
+
+        $section = PageSection::query()->updateOrCreate(
+            ['key' => 'hero'],
+            [
+                'type' => 'hero',
+                'sort_order' => 1,
+                'is_visible' => true,
+                'content' => [
+                    'heading' => 'Hero With Visuals',
+                    'collage_images' => ['sections/hero/collage/01M6CBZ7ZRQJB55GTBKXDJEEBV.png'],
+                ],
+            ]
+        );
+
+        // Verify Project list table renders without error
+        Livewire::test(ListProjects::class)
+            ->assertSuccessful()
+            ->assertSee('Skyline Tower');
+
+        // Verify PageSection list table renders with thumbnail column
+        Livewire::test(ListPageSections::class)
+            ->assertSuccessful()
+            ->assertSee('hero');
+
+        // Verify BlogPost list table renders with cover column
+        Livewire::test(ListBlogPosts::class)
+            ->assertSuccessful()
+            ->assertSee('Top Engineering Trends');
+
+        // Verify Storage public URL format
+        $this->assertEquals('/storage/test.png', Storage::disk('public')->url('test.png'));
     }
 }

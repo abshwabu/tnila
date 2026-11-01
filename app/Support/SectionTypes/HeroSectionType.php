@@ -60,6 +60,7 @@ class HeroSectionType extends BaseSectionType
                             ->disk('public')
                             ->directory('sections/hero')
                             ->image()
+                            ->imageEditor()
                             ->maxSize(5120)
                             ->helperText('Large hero banner image (recommended 1920x1080).'),
 
@@ -75,6 +76,7 @@ class HeroSectionType extends BaseSectionType
                         ->disk('public')
                         ->directory('sections/hero/collage')
                         ->image()
+                        ->imageEditor()
                         ->multiple()
                         ->maxFiles(4)
                         ->maxSize(5120)

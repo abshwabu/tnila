@@ -56,6 +56,11 @@ class ProjectsRelationManager extends RelationManager
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('featured_image')
+                    ->label('Image')
+                    ->state(fn (Project $record): ?string => $record->featuredImageUrl())
+                    ->checkFileExistence(false)
+                    ->circular(),
                 Tables\Columns\TextColumn::make('title')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('industry.name')->label('Industry'),
                 Tables\Columns\BadgeColumn::make('status')

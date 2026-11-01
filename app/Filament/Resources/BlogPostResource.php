@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\BlogPostResource\Pages;
 use App\Models\BlogPost;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -32,7 +33,14 @@ class BlogPostResource extends Resource
                     TextInput::make('title')->required()->maxLength(255),
                     TextInput::make('category')->required()->maxLength(255),
                     TextInput::make('author_name')->required()->maxLength(255),
-                    TextInput::make('cover_image')->label('Cover image path')->maxLength(255)->columnSpanFull(),
+                    FileUpload::make('cover_image')
+                        ->label('Cover Image')
+                        ->disk('public')
+                        ->directory('blog')
+                        ->image()
+                        ->imageEditor()
+                        ->maxSize(5120)
+                        ->columnSpanFull(),
                     Select::make('status')
                         ->options([
                             'draft' => 'Draft',
@@ -58,6 +66,10 @@ class BlogPostResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('cover_image_url')
+                    ->label('Cover')
+                    ->checkFileExistence(false)
+                    ->circular(),
                 Tables\Columns\TextColumn::make('title')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('category')->toggleable(),
                 Tables\Columns\TextColumn::make('author_name')->toggleable(),

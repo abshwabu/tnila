@@ -75,7 +75,10 @@ class ProjectResource extends Resource
     {
         return $table->columns([
             Tables\Columns\ImageColumn::make('featured_image')
-                ->state(fn (Project $record): ?string => $record->featuredImageUrl()),
+                ->label('Image')
+                ->state(fn (Project $record): ?string => $record->featuredImageUrl())
+                ->checkFileExistence(false)
+                ->circular(),
             Tables\Columns\TextColumn::make('title')->searchable()->sortable(),
             Tables\Columns\TextColumn::make('customer.name')->label('Customer')->searchable(),
             Tables\Columns\TextColumn::make('industry.name')->label('Industry')->searchable(),

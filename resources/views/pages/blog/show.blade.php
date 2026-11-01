@@ -27,11 +27,7 @@
 
             <div class="mt-6 overflow-hidden rounded-[2rem] border border-stone-200 bg-white shadow-sm">
                 <div class="aspect-[16/8] bg-slate-900">
-                    @if ($post->cover_image)
-                        <img src="{{ asset($post->cover_image) }}" alt="{{ $post->title }}" class="h-full w-full object-cover">
-                    @else
-                        <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1600&q=80" alt="{{ $post->title }}" class="h-full w-full object-cover">
-                    @endif
+                    <img src="{{ $post->cover_image_url }}" alt="{{ $post->title }}" class="h-full w-full object-cover">
                 </div>
                 <div class="p-6 sm:p-8">
                     <p class="text-xs font-semibold uppercase tracking-[0.35em] text-amber-700">{{ $post->category }}</p>
