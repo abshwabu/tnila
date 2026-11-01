@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\ContactSubmission;
 use App\Models\User;
 use App\Notifications\AdminContactSubmissionNotification;
+use App\Support\Site;
 use Illuminate\Support\Facades\Notification;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -36,8 +37,11 @@ class ContactForm extends Component
         ]);
 
         $admin = User::role('Admin')->first();
+        $notificationEmail = Site::setting('contact.notification_email');
 
-        if ($admin) {
+        if (filled($notificationEmail)) {
+            Notification::route('mail', $notificationEmail)->notify(new AdminContactSubmissionNotification($submission));
+        } elseif ($admin) {
             $admin->notify(new AdminContactSubmissionNotification($submission));
         } elseif (config('mail.from.address')) {
             Notification::route('mail', config('mail.from.address'))->notify(new AdminContactSubmissionNotification($submission));

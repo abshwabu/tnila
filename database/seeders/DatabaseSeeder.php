@@ -115,5 +115,10 @@ class DatabaseSeeder extends Seeder
         ContactSubmission::factory()->count(5)->create();
 
         Faq::factory()->count(10)->create();
+
+        $this->call([
+            SiteSettingSeeder::class,
+            PageSectionSeeder::class,
+        ]);
     }
 }

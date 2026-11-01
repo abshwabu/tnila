@@ -1,45 +1,89 @@
 @php
-    $links = [
-        ['label' => 'Home', 'href' => route('home')],
-        ['label' => 'About', 'href' => route('about.index')],
-        ['label' => 'Services', 'href' => route('services.index')],
-        ['label' => 'Industries', 'href' => route('industries.index')],
-        ['label' => 'Projects', 'href' => route('projects.index')],
-        ['label' => 'Blog', 'href' => route('blog.index')],
-        ['label' => 'Careers', 'href' => route('careers.index')],
-        ['label' => 'FAQs', 'href' => route('faqs.index')],
+    use App\Support\Site;
+
+    $settings = Site::settings();
+    $branding = $settings->branding ?? [];
+    $navigation = $settings->navigation ?? [];
+
+    $siteName = $branding['site_name'] ?? config('app.name', 'Tnila');
+    $tagline = $branding['tagline'] ?? 'Construction Company';
+    $logoLight = filled($branding['logo_light'] ?? null) ? Site::imageUrl($branding['logo_light']) : null;
+
+    $defaultLinks = [
+        ['label' => 'Home', 'href' => route('home'), 'match' => 'home'],
+        ['label' => 'About', 'href' => route('about.index'), 'match' => 'about.*'],
+        ['label' => 'Services', 'href' => route('services.index'), 'match' => 'services.*'],
+        ['label' => 'Industries', 'href' => route('industries.index'), 'match' => 'industries.*'],
+        ['label' => 'Projects', 'href' => route('projects.index'), 'match' => 'projects.*'],
+        ['label' => 'Blog', 'href' => route('blog.index'), 'match' => 'blog.*'],
+        ['label' => 'Careers', 'href' => route('careers.index'), 'match' => 'careers.*'],
+        ['label' => 'FAQs', 'href' => route('faqs.index'), 'match' => 'faqs.*'],
     ];
 
-    $active = fn (string $routeName): bool => request()->routeIs($routeName);
+    $navConfig = $navigation['items'] ?? $navigation;
+    $menuLinks = [];
+
+    if (is_array($navConfig) && ! empty($navConfig)) {
+        foreach ($navConfig as $item) {
+            if (! is_array($item) || empty($item['label'])) {
+                continue;
+            }
+
+            $label = $item['label'];
+            $type = $item['type'] ?? 'route';
+            $openInNewTab = (bool) ($item['open_in_new_tab'] ?? false);
+
+            if ($type === 'section' && filled($item['section_key'] ?? null)) {
+                $anchor = Site::resolveSectionAnchor($item['section_key']);
+                $href = request()->routeIs('home') ? '#' . $anchor : url('/#' . $anchor);
+            } else {
+                $href = $item['url'] ?? '/';
+            }
+
+            $menuLinks[] = [
+                'label' => $label,
+                'href' => $href,
+                'new_tab' => $openInNewTab,
+            ];
+        }
+    }
+
+    if (empty($menuLinks)) {
+        $menuLinks = array_map(fn ($l) => [
+            'label' => $l['label'],
+            'href' => $l['href'],
+            'new_tab' => false,
+            'match' => $l['match'],
+        ], $defaultLinks);
+    }
+
+    $ctaLabel = $navigation['cta_label'] ?? 'Start a project';
+    $ctaUrl = $navigation['cta_url'] ?? route('contact');
+    $ctaNewTab = (bool) ($navigation['cta_open_in_new_tab'] ?? false);
 @endphp
 
 <header class="sticky top-0 z-50 border-b border-stone-200/80 bg-stone-50/80 backdrop-blur-2xl" x-data="{ open: false }" @keydown.escape.window="open = false">
     <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
         <a href="{{ route('home') }}" class="flex items-center gap-3">
-            <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-950 text-sm font-black text-stone-50 shadow-sm shadow-slate-950/10">T</span>
-            <div>
-                <p class="text-[0.7rem] font-semibold uppercase tracking-[0.35em] text-amber-700">Tnila</p>
-                <p class="text-sm font-semibold tracking-tight text-slate-950">Construction Company</p>
-            </div>
+            @if($logoLight)
+                <img src="{{ $logoLight }}" alt="{{ $siteName }}" class="h-10 w-auto max-w-[200px] object-contain" />
+            @else
+                <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-950 text-sm font-black text-stone-50 shadow-sm shadow-slate-950/10">
+                    {{ substr($siteName, 0, 1) }}
+                </span>
+                <div>
+                    <p class="text-[0.7rem] font-semibold uppercase tracking-[0.35em] text-amber-700">{{ $siteName }}</p>
+                    <p class="text-sm font-semibold tracking-tight text-slate-950">{{ $tagline }}</p>
+                </div>
+            @endif
         </a>
 
         <nav class="hidden items-center gap-6 text-sm font-medium text-slate-600 xl:flex">
-            @foreach ($links as $link)
+            @foreach ($menuLinks as $link)
                 <a
                     href="{{ $link['href'] }}"
-                    @class([
-                        'transition duration-200 ease-out hover:text-slate-950',
-                        'text-slate-950' => $active(match ($link['label']) {
-                            'Home' => 'home',
-                            'About' => 'about.*',
-                            'Services' => 'services.*',
-                            'Industries' => 'industries.*',
-                            'Projects' => 'projects.*',
-                            'Blog' => 'blog.*',
-                            'Careers' => 'careers.*',
-                            'FAQs' => 'faqs.*',
-                        }),
-                    ])
+                    @if(!empty($link['new_tab'])) target="_blank" rel="noopener noreferrer" @endif
+                    class="transition duration-200 ease-out hover:text-slate-950 {{ request()->is(ltrim($link['href'], '/')) || (isset($link['match']) && request()->routeIs($link['match'])) ? 'text-slate-950 font-semibold' : '' }}"
                 >
                     {{ $link['label'] }}
                 </a>
@@ -47,7 +91,9 @@
         </nav>
 
         <div class="hidden items-center gap-3 xl:flex">
-            <x-button href="{{ route('contact') }}">Start a project</x-button>
+            <x-button :href="$ctaUrl" :target="$ctaNewTab ? '_blank' : null" :rel="$ctaNewTab ? 'noopener noreferrer' : null">
+                {{ $ctaLabel }}
+            </x-button>
             <a href="/admin" class="btn-base btn-secondary">Admin</a>
         </div>
 
@@ -70,10 +116,18 @@
 
     <div id="mobile-navigation" class="border-t border-stone-200 bg-stone-50 px-6 py-5 xl:hidden" x-show="open" x-cloak x-transition.opacity.duration.200ms>
         <div class="mx-auto grid max-w-7xl gap-4 text-sm font-medium text-slate-700">
-            @foreach ($links as $link)
-                <a href="{{ $link['href'] }}" class="card-surface px-4 py-3 text-slate-700 card-surface-hover">{{ $link['label'] }}</a>
+            @foreach ($menuLinks as $link)
+                <a
+                    href="{{ $link['href'] }}"
+                    @if(!empty($link['new_tab'])) target="_blank" rel="noopener noreferrer" @endif
+                    class="card-surface px-4 py-3 text-slate-700 card-surface-hover"
+                >
+                    {{ $link['label'] }}
+                </a>
             @endforeach
-            <x-button href="{{ route('contact') }}">Start a project</x-button>
+            <x-button :href="$ctaUrl" :target="$ctaNewTab ? '_blank' : null" class="w-full justify-center">
+                {{ $ctaLabel }}
+            </x-button>
             <a href="/admin" class="btn-base btn-secondary justify-center">Admin</a>
         </div>
     </div>

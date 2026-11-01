@@ -2,6 +2,9 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\HowToEditWidget;
+use App\Filament\Widgets\QuickLinksWidget;
+use App\Support\Site;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -27,9 +30,20 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->brandName('Tnila')
+            ->brandName(fn () => Site::setting('branding.site_name', 'Tnila'))
+            ->brandLogo(fn () => view('filament.admin.logo'))
+            ->brandLogoHeight('2.5rem')
+            ->favicon(fn () => filled(Site::setting('branding.favicon'))
+                ? Site::imageUrl(Site::setting('branding.favicon'))
+                : asset('favicon.ico'))
             ->colors([
                 'primary' => Color::Amber,
+            ])
+            ->navigationGroups([
+                'Site',
+                'Content',
+                'CRM',
+                'Careers',
             ])
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
@@ -39,8 +53,9 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
+                QuickLinksWidget::class,
+                HowToEditWidget::class,
                 Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
