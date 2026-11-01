@@ -16,31 +16,21 @@ class PublicSiteController extends Controller
 {
     public function home(): View
     {
+        $settings = \App\Support\Site::settings();
+        $sections = \App\Support\Site::sections();
+        $items = \App\Support\Site::items();
+
         return view('pages.home', [
-            'services' => Service::query()->orderBy('order')->take(6)->get(),
-            'industries' => Industry::query()->withCount('projects')->orderBy('name')->get(),
-            'featuredProjects' => Project::query()
-                ->with(['industry', 'customer'])
-                ->where('featured', true)
-                ->latest('updated_at')
-                ->take(4)
-                ->get(),
-            'recentPosts' => BlogPost::query()
-                ->where('status', 'published')
-                ->whereNotNull('published_at')
-                ->latest('published_at')
-                ->take(3)
-                ->get(),
-            'approvedTestimonials' => Testimonial::query()
-                ->where('approved', true)
-                ->where('featured', true)
-                ->with(['customer', 'project'])
-                ->orderByDesc('featured')
-                ->orderByDesc('id')
-                ->take(8)
-                ->get(),
-            'projectCount' => Project::query()->count(),
-            'industryCount' => Industry::query()->count(),
+            'settings' => $settings,
+            'sections' => $sections,
+            'items' => $items,
+            'services' => $items['services'] ?? collect(),
+            'industries' => $items['industries'] ?? collect(),
+            'featuredProjects' => ($items['projects'] ?? collect())->take(4),
+            'recentPosts' => ($items['posts'] ?? collect())->take(3),
+            'approvedTestimonials' => $items['testimonials'] ?? collect(),
+            'projectCount' => $items['project_count'] ?? 0,
+            'industryCount' => $items['industry_count'] ?? 0,
         ]);
     }
 

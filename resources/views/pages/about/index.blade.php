@@ -1,7 +1,19 @@
+@php
+    use App\Support\Site;
+
+    $section = Site::section('about');
+    $content = $section->content ?? [];
+    $eyebrow = $content['eyebrow'] ?? 'About Tnila';
+    $heading = $content['heading'] ?? 'A construction partner built around clarity, quality, and delivery.';
+    $subheading = $content['subheading'] ?? ($content['story_intro'] ?? 'We help clients shape projects that move smoothly from intent to completion, with a process designed to reduce friction and keep every stakeholder informed.');
+    $ctaSection = Site::section('cta_banner');
+    $ctaContent = $ctaSection->content ?? [];
+@endphp
+
 @extends('layouts.public')
 
-@section('title', 'About | Tnila')
-@section('meta_description', 'Learn who Tnila is, how we work, and what drives our construction projects.')
+@section('title', 'About | ' . Site::setting('branding.site_name', 'Tnila'))
+@section('meta_description', 'Learn who ' . Site::setting('branding.site_name', 'Tnila') . ' is, how we work, and what drives our construction projects.')
 
 @section('content')
     <section class="px-6 py-14 lg:px-8">
@@ -9,9 +21,9 @@
             <x-breadcrumbs :items="[['label' => 'About']]" />
             <div class="mt-6 grid gap-8 lg:grid-cols-[1fr_0.9fr] lg:items-end">
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-[0.35em] text-amber-700">About Tnila</p>
-                    <h1 class="mt-3 font-display text-5xl leading-tight text-slate-950">A construction partner built around clarity, quality, and delivery.</h1>
-                    <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-600">We help clients shape projects that move smoothly from intent to completion, with a process designed to reduce friction and keep every stakeholder informed.</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.35em] text-amber-700">{{ $eyebrow }}</p>
+                    <h1 class="mt-3 font-display text-5xl leading-tight text-slate-950">{{ $heading }}</h1>
+                    <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-600">{{ $subheading }}</p>
                 </div>
                 <div class="rounded-[1.75rem] border border-stone-200 bg-white p-6 shadow-sm">
                     <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">At a glance</p>
@@ -50,7 +62,14 @@
 
     <section class="px-6 py-8 lg:px-8">
         <div class="mx-auto max-w-7xl">
-            <x-cta-section primaryLabel="Contact us" secondaryLabel="View services" :secondaryHref="route('services.index')" />
+            <x-cta-section
+                :title="$ctaContent['heading'] ?? 'Ready to start your project?'"
+                :description="$ctaContent['subheading'] ?? 'Tell us what you are planning and we will help shape the next step.'"
+                :primaryLabel="$ctaContent['primary_label'] ?? 'Contact us'"
+                :primaryHref="$ctaContent['primary_url'] ?? route('contact')"
+                :secondaryLabel="$ctaContent['secondary_label'] ?? 'View services'"
+                :secondaryHref="$ctaContent['secondary_url'] ?? route('services.index')"
+            />
         </div>
     </section>
 @endsection

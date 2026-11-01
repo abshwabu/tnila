@@ -1,16 +1,26 @@
+@php
+    use App\Support\Site;
+
+    $section = Site::section('services');
+    $content = $section->content ?? [];
+    $eyebrow = $content['eyebrow'] ?? 'Services';
+    $heading = $content['heading'] ?? 'Construction services designed to reduce friction.';
+    $subheading = $content['subheading'] ?? 'We support projects with practical delivery, strong communication, and a focus on the details that matter to clients and end users.';
+@endphp
+
 @extends('layouts.public')
 
-@section('title', 'Services | Tnila')
-@section('meta_description', 'Explore the construction services Tnila offers for residential, commercial, industrial, and infrastructure projects.')
+@section('title', 'Services | ' . Site::setting('branding.site_name', 'Tnila'))
+@section('meta_description', 'Explore the construction services ' . Site::setting('branding.site_name', 'Tnila') . ' offers for residential, commercial, industrial, and infrastructure projects.')
 
 @section('content')
     <section class="px-6 py-14 lg:px-8">
         <div class="mx-auto max-w-7xl">
             <x-breadcrumbs :items="[['label' => 'Services']]" />
             <div class="mt-6 max-w-3xl">
-                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-amber-700">Services</p>
-                <h1 class="mt-3 font-display text-5xl leading-tight text-slate-950">Construction services designed to reduce friction.</h1>
-                <p class="mt-6 text-lg leading-8 text-slate-600">We support projects with practical delivery, strong communication, and a focus on the details that matter to clients and end users.</p>
+                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-amber-700">{{ $eyebrow }}</p>
+                <h1 class="mt-3 font-display text-5xl leading-tight text-slate-950">{{ $heading }}</h1>
+                <p class="mt-6 text-lg leading-8 text-slate-600">{{ $subheading }}</p>
             </div>
 
             <div class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">

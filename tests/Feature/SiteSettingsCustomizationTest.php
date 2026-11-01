@@ -192,4 +192,176 @@ class SiteSettingsCustomizationTest extends TestCase
         $darker = ColorHelper::adjustBrightness('#ffffff', -20);
         $this->assertNotEquals('#ffffff', $darker);
     }
+
+    public function test_section_visibility_and_ordering_dynamically_updates_homepage(): void
+    {
+        PageSection::query()->updateOrCreate(
+            ['key' => 'services'],
+            [
+                'type' => 'services',
+                'sort_order' => 2,
+                'is_visible' => false,
+                'content' => [
+                    'heading' => 'Invisible Services Heading',
+                ],
+            ]
+        );
+
+        PageSection::query()->updateOrCreate(
+            ['key' => 'about'],
+            [
+                'type' => 'about',
+                'sort_order' => 1,
+                'is_visible' => true,
+                'content' => [
+                    'heading' => 'Promoted About Section Heading',
+                ],
+            ]
+        );
+
+        Site::flushCache();
+
+        $response = $this->get('/');
+        $response->assertOk();
+        $response->assertDontSee('Invisible Services Heading');
+        $response->assertSee('Promoted About Section Heading');
+    }
+
+    public function test_subpages_reflect_respective_section_settings(): void
+    {
+        PageSection::query()->updateOrCreate(
+            ['key' => 'about'],
+            [
+                'type' => 'about',
+                'sort_order' => 1,
+                'is_visible' => true,
+                'content' => [
+                    'eyebrow' => 'Unique About Eyebrow',
+                    'heading' => 'Customized About Heading For Test',
+                    'mission' => 'Our custom mission statement for test',
+                    'vision' => 'Our custom vision statement for test',
+                    'story' => '<p>Custom HTML story paragraph for testing.</p>',
+                ],
+            ]
+        );
+
+        PageSection::query()->updateOrCreate(
+            ['key' => 'services'],
+            [
+                'type' => 'services',
+                'sort_order' => 2,
+                'is_visible' => true,
+                'content' => [
+                    'heading' => 'Customized Services Section Heading For Test',
+                ],
+            ]
+        );
+
+        PageSection::query()->updateOrCreate(
+            ['key' => 'industries'],
+            [
+                'type' => 'industries',
+                'sort_order' => 3,
+                'is_visible' => true,
+                'content' => [
+                    'heading' => 'Customized Industries Section Heading For Test',
+                ],
+            ]
+        );
+
+        PageSection::query()->updateOrCreate(
+            ['key' => 'projects'],
+            [
+                'type' => 'projects',
+                'sort_order' => 4,
+                'is_visible' => true,
+                'content' => [
+                    'heading' => 'Customized Projects Section Heading For Test',
+                ],
+            ]
+        );
+
+        PageSection::query()->updateOrCreate(
+            ['key' => 'faq'],
+            [
+                'type' => 'faq',
+                'sort_order' => 5,
+                'is_visible' => true,
+                'content' => [
+                    'heading' => 'Customized FAQs Section Heading For Test',
+                ],
+            ]
+        );
+
+        PageSection::query()->updateOrCreate(
+            ['key' => 'testimonials'],
+            [
+                'type' => 'testimonials',
+                'sort_order' => 6,
+                'is_visible' => true,
+                'content' => [
+                    'heading' => 'Customized Testimonials Section Heading For Test',
+                ],
+            ]
+        );
+
+        PageSection::query()->updateOrCreate(
+            ['key' => 'blog'],
+            [
+                'type' => 'blog',
+                'sort_order' => 7,
+                'is_visible' => true,
+                'content' => [
+                    'heading' => 'Customized Blog Section Heading For Test',
+                ],
+            ]
+        );
+
+        Site::flushCache();
+
+        // Check About subpages
+        $aboutResponse = $this->get('/about');
+        $aboutResponse->assertOk();
+        $aboutResponse->assertSee('Customized About Heading For Test');
+        $aboutResponse->assertSee('Unique About Eyebrow');
+
+        $storyResponse = $this->get('/about/our-story');
+        $storyResponse->assertOk();
+        $storyResponse->assertSee('Custom HTML story paragraph for testing.');
+
+        $missionResponse = $this->get('/about/mission');
+        $missionResponse->assertOk();
+        $missionResponse->assertSee('Our custom mission statement for test');
+        $missionResponse->assertSee('Our custom vision statement for test');
+
+        // Check Services index
+        $servicesResponse = $this->get('/services');
+        $servicesResponse->assertOk();
+        $servicesResponse->assertSee('Customized Services Section Heading For Test');
+
+        // Check Industries index
+        $industriesResponse = $this->get('/industries');
+        $industriesResponse->assertOk();
+        $industriesResponse->assertSee('Customized Industries Section Heading For Test');
+
+        // Check Projects index
+        $projectsResponse = $this->get('/projects');
+        $projectsResponse->assertOk();
+        $projectsResponse->assertSee('Customized Projects Section Heading For Test');
+
+        // Check FAQs index
+        $faqsResponse = $this->get('/faqs');
+        $faqsResponse->assertOk();
+        $faqsResponse->assertSee('Customized FAQs Section Heading For Test');
+
+        // Check Testimonials index
+        $testimonialsResponse = $this->get('/testimonials');
+        $testimonialsResponse->assertOk();
+        $testimonialsResponse->assertSee('Customized Testimonials Section Heading For Test');
+
+        // Check Blog index
+        $blogResponse = $this->get('/blog');
+        $blogResponse->assertOk();
+        $blogResponse->assertSee('Customized Blog Section Heading For Test');
+    }
 }

@@ -17,6 +17,8 @@ class Site
 
     public const CACHE_SECTIONS_KEY = 'site:sections';
 
+    public const CACHE_ITEMS_KEY = 'site:items';
+
     /**
      * Retrieve the singleton site settings, cached indefinitely.
      */
@@ -123,12 +125,63 @@ class Site
     }
 
     /**
+     * Retrieve all shared dynamic items for landing sections, cached.
+     *
+     * @return array<string, mixed>
+     */
+    public static function items(): array
+    {
+        try {
+            $cached = Cache::get(self::CACHE_ITEMS_KEY);
+
+            if (is_array($cached)) {
+                return $cached;
+            }
+        } catch (Throwable) {
+            Cache::forget(self::CACHE_ITEMS_KEY);
+        }
+
+        try {
+            $items = [
+                'services' => \App\Models\Service::query()->orderBy('order')->get(),
+                'industries' => \App\Models\Industry::query()->withCount('projects')->orderBy('name')->get(),
+                'projects' => \App\Models\Project::query()->with(['industry', 'customer'])->where('featured', true)->latest('updated_at')->take(8)->get(),
+                'testimonials' => \App\Models\Testimonial::query()->where('approved', true)->where('featured', true)->with(['customer', 'project'])->orderByDesc('featured')->orderByDesc('id')->take(8)->get(),
+                'posts' => \App\Models\BlogPost::query()->where('status', 'published')->whereNotNull('published_at')->latest('published_at')->take(6)->get(),
+                'faqs' => \App\Models\Faq::query()->orderBy('category')->orderBy('order')->get(),
+                'project_count' => \App\Models\Project::query()->count(),
+                'industry_count' => \App\Models\Industry::query()->count(),
+            ];
+        } catch (Throwable) {
+            $items = [
+                'services' => collect(),
+                'industries' => collect(),
+                'projects' => collect(),
+                'testimonials' => collect(),
+                'posts' => collect(),
+                'faqs' => collect(),
+                'project_count' => 0,
+                'industry_count' => 0,
+            ];
+        }
+
+        try {
+            Cache::forever(self::CACHE_ITEMS_KEY, $items);
+        } catch (Throwable) {
+            // Ignore cache storage failure
+        }
+
+        return $items;
+    }
+
+    /**
      * Flush all cached site settings and sections.
      */
     public static function flushCache(): void
     {
         Cache::forget(self::CACHE_SETTINGS_KEY);
         Cache::forget(self::CACHE_SECTIONS_KEY);
+        Cache::forget(self::CACHE_ITEMS_KEY);
     }
 
     /**
