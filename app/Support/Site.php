@@ -184,7 +184,7 @@ class Site
         }
 
         try {
-            Cache::forever(self::CACHE_ITEMS_KEY, $items);
+            Cache::put(self::CACHE_ITEMS_KEY, $items, now()->addMinutes(10));
         } catch (Throwable) {
             // Ignore cache storage failure
         }

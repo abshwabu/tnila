@@ -97,6 +97,15 @@ class ProjectResource extends Resource
                     ->relationship('industry', 'name')
                     ->label('Industry'),
             ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ])
             ->defaultSort('start_date', 'desc');
     }
 

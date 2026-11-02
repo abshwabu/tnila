@@ -483,4 +483,35 @@ class SiteSettingsCustomizationTest extends TestCase
         // 5. High-contrast text on primary amber buttons is dark slate (#0f172a)
         $this->assertEquals('#0f172a', ColorHelper::contrastTextColor('#f59e0b'));
     }
+
+    public function test_deleted_project_does_not_appear_on_homepage(): void
+    {
+        $this->seed(\Database\Seeders\PageSectionSeeder::class);
+        $this->seed(\Database\Seeders\SiteSettingSeeder::class);
+
+        $industry = Industry::factory()->create(['name' => 'Commercial Sector']);
+
+        $project = Project::create([
+            'title' => 'Project To Be Deleted',
+            'industry_id' => $industry->id,
+            'description' => 'Will be removed soon.',
+            'status' => 'completed',
+            'start_date' => now(),
+            'location' => 'Nairobi',
+            'featured' => true,
+        ]);
+
+        // Visit homepage first to prime the cache
+        $response = $this->get('/');
+        $response->assertOk();
+        $response->assertSee('Project To Be Deleted');
+
+        // Delete project
+        $project->delete();
+
+        // Visit homepage again - deleted project must NOT appear
+        $responseAfter = $this->get('/');
+        $responseAfter->assertOk();
+        $responseAfter->assertDontSee('Project To Be Deleted');
+    }
 }

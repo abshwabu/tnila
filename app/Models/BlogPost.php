@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\FlushesSiteCache;
 use App\Support\Site;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +11,7 @@ use Spatie\Sluggable\SlugOptions;
 
 class BlogPost extends Model
 {
+    use FlushesSiteCache;
     use HasFactory;
     use HasSlug;
 
