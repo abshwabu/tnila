@@ -443,4 +443,44 @@ class SiteSettingsCustomizationTest extends TestCase
         // Verify Storage public URL format
         $this->assertEquals('/storage/test.png', Storage::disk('public')->url('test.png'));
     }
+
+    public function test_default_seeded_ui_matches_pre_dashboard_design(): void
+    {
+        $this->seed(\Database\Seeders\PageSectionSeeder::class);
+        $this->seed(\Database\Seeders\SiteSettingSeeder::class);
+        Site::clearCache();
+
+        $response = $this->get('/');
+        $response->assertOk();
+
+        // 1. Homepage shows 8 original sections
+        $response->assertSee('Build with a team that keeps the process calm, clear, and on schedule.');
+        $response->assertSee('Delivery');
+        $response->assertSee('Clarity');
+        $response->assertSee('Focus');
+        $response->assertSee('What we do best');
+        $response->assertSee('Four sectors, one dependable process');
+        $response->assertSee('Selected work that speaks for itself');
+        $response->assertSee('Client stories');
+        $response->assertSee('What clients say about the work');
+        $response->assertSee('Ready to start your project?');
+        $response->assertSee('From the blog');
+        $response->assertSee('Recent thinking, tips, and project updates');
+        $response->assertSee('Read all posts →');
+
+        // 2. Testimonial carousel has no duplicate outer header
+        $response->assertDontSee('Client feedback');
+        $response->assertDontSee('Trusted by developers, homeowners, and public leaders');
+
+        // 3. Standalone sections (FAQ, Contact, extra Stats) are not on homepage
+        $response->assertDontSee('Everything you need to know about building with Tnila');
+        $response->assertDontSee('Start a conversation about your next project');
+
+        // 4. Default body background does not override CSS radial glow
+        $this->assertStringNotContainsString('style="background-color: var(--color-background);"', $response->getContent());
+        $this->assertStringNotContainsString('style="background-color: #fffcf7;"', $response->getContent());
+
+        // 5. High-contrast text on primary amber buttons is dark slate (#0f172a)
+        $this->assertEquals('#0f172a', ColorHelper::contrastTextColor('#f59e0b'));
+    }
 }

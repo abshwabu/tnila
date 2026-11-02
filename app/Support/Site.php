@@ -203,6 +203,14 @@ class Site
     }
 
     /**
+     * Clear all cached site settings and sections (alias for flushCache).
+     */
+    public static function clearCache(): void
+    {
+        static::flushCache();
+    }
+
+    /**
      * Resolve the preferred URL anchor identifier for a section.
      */
     public static function resolveSectionAnchor(string|PageSection|null $sectionOrKey): string

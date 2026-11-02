@@ -41,11 +41,23 @@ class ColorHelper
     }
 
     /**
-     * Automatically choose high-contrast text color based on background luminance.
+     * Automatically choose high-contrast text color based on WCAG contrast ratio.
      */
     public static function contrastTextColor(string $bgColor, string $lightText = '#ffffff', string $darkText = '#0f172a'): string
     {
-        return static::isDark($bgColor) ? $lightText : $darkText;
+        $bgLum = static::luminance($bgColor);
+        $lightLum = static::luminance($lightText);
+        $darkLum = static::luminance($darkText);
+
+        $ratioLight = ($lightLum > $bgLum)
+            ? ($lightLum + 0.05) / ($bgLum + 0.05)
+            : ($bgLum + 0.05) / ($lightLum + 0.05);
+
+        $ratioDark = ($darkLum > $bgLum)
+            ? ($darkLum + 0.05) / ($bgLum + 0.05)
+            : ($bgLum + 0.05) / ($darkLum + 0.05);
+
+        return $ratioDark >= $ratioLight ? $darkText : $lightText;
     }
 
     /**

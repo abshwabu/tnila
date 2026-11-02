@@ -10,8 +10,8 @@
 >
     <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
-            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-amber-700">Client stories</p>
-            <h2 class="mt-3 font-display text-3xl text-slate-950">What clients say about the work</h2>
+            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-amber-700">{{ $eyebrow ?? 'Client stories' }}</p>
+            <h2 class="mt-3 font-display text-3xl text-slate-950">{{ $heading ?? 'What clients say about the work' }}</h2>
         </div>
         <div class="flex gap-2">
             <button type="button" wire:click="previous" aria-label="Previous testimonial" class="rounded-full border border-stone-200 px-4 py-2 text-sm font-semibold text-slate-700 transition duration-200 ease-out hover:border-stone-300 hover:bg-stone-100">Prev</button>

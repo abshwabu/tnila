@@ -138,7 +138,7 @@
         {!! $seo['analytics_snippet'] !!}
     @endif
 </head>
-<body class="min-h-screen font-sans antialiased" style="background-color: var(--color-background);">
+<body class="min-h-screen font-sans antialiased" @if($background && strtolower($background) !== '#fffcf7') style="background-color: {{ $background }}; background-image: none;" @endif>
     <x-header />
 
     <main>

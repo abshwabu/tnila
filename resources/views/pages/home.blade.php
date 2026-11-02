@@ -65,7 +65,7 @@
     @else
         {{-- Fail-safe fallback if no sections are found in database or cache --}}
         @php
-            $fallbackKeys = ['hero', 'about', 'stats', 'services', 'industries', 'projects', 'testimonials', 'cta_banner', 'faq', 'blog', 'contact'];
+            $fallbackKeys = ['hero', 'about', 'services', 'industries', 'projects', 'testimonials', 'cta_banner', 'blog'];
         @endphp
         @foreach ($fallbackKeys as $fallbackKey)
             @if (view()->exists("landing.sections.{$fallbackKey}"))

@@ -8,6 +8,18 @@ use Livewire\Component;
 class TestimonialCarousel extends Component
 {
     public int $index = 0;
+    public ?string $eyebrow = 'Client stories';
+    public ?string $heading = 'What clients say about the work';
+
+    public function mount(?string $eyebrow = null, ?string $heading = null): void
+    {
+        if (filled($eyebrow)) {
+            $this->eyebrow = $eyebrow;
+        }
+        if (filled($heading)) {
+            $this->heading = $heading;
+        }
+    }
 
     public function next(): void
     {

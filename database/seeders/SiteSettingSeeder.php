@@ -26,9 +26,9 @@ class SiteSettingSeeder extends Seeder
                     'footer_logo' => null,
                 ],
                 'theme' => [
-                    'primary' => '#d97706',
+                    'primary' => '#f59e0b',
                     'secondary' => '#0f172a',
-                    'accent' => '#f59e0b',
+                    'accent' => '#ea7f22',
                     'background' => '#fffcf7',
                     'surface' => '#ffffff',
                     'text' => '#0f172a',

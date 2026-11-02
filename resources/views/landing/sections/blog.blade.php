@@ -10,7 +10,7 @@
     $content = is_array($section?->content) ? $section->content : [];
     $eyebrow = $content['eyebrow'] ?? 'From the blog';
     $heading = $content['heading'] ?? 'Recent thinking, tips, and project updates';
-    $subheading = $content['subheading'] ?? 'Insights from the field on construction methods, scheduling, and engineering.';
+    $subheading = $content['subheading'] ?? null;
     $articlesCount = (int) ($content['articles_count'] ?? 3);
     $viewAllLabel = $content['view_all_label'] ?? 'Read all posts →';
     $buttons = is_array($content['buttons'] ?? null) ? $content['buttons'] : [];
@@ -21,19 +21,19 @@
 
 <x-section-wrapper :section="$section" anchor="blog">
     <div class="reveal opacity-0 translate-y-6" x-cloak x-data="{ shown: false }" x-intersect.once="shown = true" :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'">
-        <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div class="max-w-2xl">
+        <div class="flex items-end justify-between gap-4">
+            <div>
                 @if(filled($eyebrow))
                     <p class="section-kicker">{{ $eyebrow }}</p>
                 @endif
-                <h2 class="section-title mt-2">{{ $heading }}</h2>
+                <h2 class="section-title">{{ $heading }}</h2>
                 @if(filled($subheading))
                     <p class="section-copy mt-3">{{ $subheading }}</p>
                 @endif
             </div>
 
             @if(filled($viewAllLabel))
-                <a href="{{ route('blog.index') }}" class="inline-flex items-center text-sm font-semibold text-slate-700 transition duration-200 ease-out hover:text-slate-950">
+                <a href="{{ route('blog.index') }}" class="text-sm font-semibold text-slate-700 transition duration-200 ease-out hover:text-slate-950">
                     {{ $viewAllLabel }}
                 </a>
             @endif
