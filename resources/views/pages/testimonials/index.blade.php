@@ -5,13 +5,13 @@
     $content = $section->content ?? [];
     $eyebrow = $content['eyebrow'] ?? 'Testimonials';
     $heading = $content['heading'] ?? 'What clients say after the project is delivered.';
-    $subheading = $content['subheading'] ?? 'These are approved testimonials from clients and project stakeholders who have worked with the Tnila team.';
+    $subheading = $content['subheading'] ?? 'These are approved testimonials from clients and project stakeholders who have worked with the Tnela team.';
 @endphp
 
 @extends('layouts.public')
 
-@section('title', 'Testimonials | ' . Site::setting('branding.site_name', 'Tnila'))
-@section('meta_description', 'Read client testimonials and feedback about working with ' . Site::setting('branding.site_name', 'Tnila') . '.')
+@section('title', 'Testimonials | ' . Site::setting('branding.site_name', 'Tnela'))
+@section('meta_description', 'Read client testimonials and feedback about working with ' . Site::setting('branding.site_name', 'Tnela') . '.')
 
 @section('content')
     <section class="px-6 py-14 lg:px-8">

@@ -1,10 +1,10 @@
 @php
     use App\Support\Site;
 
-    $siteName = Site::setting('branding.site_name', 'Tnila');
+    $siteName = Site::setting('branding.site_name', 'Tnela');
     $tagline = Site::setting('branding.tagline', 'Construction Company');
     $seoTitle = Site::setting('seo.meta_title', "{$siteName} | {$tagline}");
-    $seoDescription = Site::setting('seo.meta_description', 'Tnila builds residential, commercial, industrial, and infrastructure projects with a modern, client-friendly process.');
+    $seoDescription = Site::setting('seo.meta_description', 'Tnela builds residential, commercial, industrial, and infrastructure projects with a modern, client-friendly process.');
     $contactPhone = Site::setting('contact.phone', '+254700000000');
     $contactAddress = Site::setting('contact.address', 'Addis Ababa, Ethiopia');
     $sections = $sections ?? Site::sections();

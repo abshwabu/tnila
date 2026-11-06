@@ -10,8 +10,8 @@
 
 @extends('layouts.public')
 
-@section('title', 'Services | ' . Site::setting('branding.site_name', 'Tnila'))
-@section('meta_description', 'Explore the construction services ' . Site::setting('branding.site_name', 'Tnila') . ' offers for residential, commercial, industrial, and infrastructure projects.')
+@section('title', 'Services | ' . Site::setting('branding.site_name', 'Tnela'))
+@section('meta_description', 'Explore the construction services ' . Site::setting('branding.site_name', 'Tnela') . ' offers for residential, commercial, industrial, and infrastructure projects.')
 
 @section('content')
     <section class="px-6 py-14 lg:px-8">

@@ -32,10 +32,10 @@ class AboutSectionType extends BaseSectionType
     public static function getDefaultContent(): array
     {
         return [
-            'story_intro' => 'Tnila began with a simple idea: clients deserve construction partners who are as organized as they are capable.',
+            'story_intro' => 'Tnela began with a simple idea: clients deserve construction partners who are as organized as they are capable.',
             'mission' => 'To deliver residential, commercial, industrial, and infrastructure builds with disciplined craftsmanship, transparent scheduling, and zero guesswork.',
             'vision' => 'To be the most trusted construction delivery firm in East Africa, setting benchmarks for structural integrity and client clarity.',
-            'story' => '<p>Tnila was established to eliminate construction uncertainty. By combining experienced field engineers with modern project coordination, we ensure that every milestone is documented, every procurement step is transparent, and every site handover meets uncompromising standards.</p>',
+            'story' => '<p>Tnela was established to eliminate construction uncertainty. By combining experienced field engineers with modern project coordination, we ensure that every milestone is documented, every procurement step is transparent, and every site handover meets uncompromising standards.</p>',
             'images' => [],
             'values' => [
                 ['icon' => 'heroicon-o-shield-check', 'title' => 'Structural Integrity', 'text' => 'We adhere to the strictest engineering tolerances, quality testing, and safety protocols.'],

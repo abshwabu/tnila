@@ -16,7 +16,7 @@
     $buttons = is_array($content['buttons'] ?? null) ? $content['buttons'] : [];
 
     $contact = Site::setting('contact', []);
-    $email = $contact['email'] ?? 'info@tnila.test';
+    $email = $contact['email'] ?? 'info@tnela.test';
     $phone = $contact['phone'] ?? '+254 700 000 000';
     $secondaryPhone = $contact['secondary_phone'] ?? null;
     $address = $contact['address'] ?? 'Addis Ababa, Ethiopia';

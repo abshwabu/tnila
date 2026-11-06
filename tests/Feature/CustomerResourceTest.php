@@ -25,7 +25,7 @@ class CustomerResourceTest extends TestCase
         Role::findOrCreate('Admin');
 
         $admin = User::factory()->create([
-            'email' => 'admin@tnila.test',
+            'email' => 'admin@tnela.test',
             'name' => 'Admin',
         ]);
 

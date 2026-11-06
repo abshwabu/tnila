@@ -30,7 +30,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->brandName(fn () => Site::setting('branding.site_name', 'Tnila'))
+            ->brandName(fn () => Site::setting('branding.site_name', 'Tnela'))
             ->brandLogo(fn () => view('filament.admin.logo'))
             ->brandLogoHeight('2.5rem')
             ->favicon(fn () => filled(Site::setting('branding.favicon'))

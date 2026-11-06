@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', $post->title . ' | Blog | Tnila')
+@section('title', $post->title . ' | Blog | Tnela')
 @section('meta_description', $post->excerpt ?: strip_tags(\Illuminate\Support\Str::limit($post->content, 160)))
 
 @push('structured-data')

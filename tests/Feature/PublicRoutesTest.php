@@ -67,7 +67,7 @@ class PublicRoutesTest extends TestCase
             'excerpt' => 'A short summary of what we learned on site.',
             'content' => '<p>Operational discipline drives results.</p>',
             'category' => 'Project Spotlight',
-            'author_name' => 'Tnila Team',
+            'author_name' => 'Tnela Team',
             'cover_image' => null,
             'published_at' => now()->subDay(),
             'status' => 'published',

@@ -16,8 +16,8 @@
 
 @extends('layouts.public')
 
-@section('title', 'Mission | About | ' . Site::setting('branding.site_name', 'Tnila'))
-@section('meta_description', 'See the mission, vision, and values that guide ' . Site::setting('branding.site_name', 'Tnila') . '.')
+@section('title', 'Mission | About | ' . Site::setting('branding.site_name', 'Tnela'))
+@section('meta_description', 'See the mission, vision, and values that guide ' . Site::setting('branding.site_name', 'Tnela') . '.')
 
 @section('content')
     <section class="px-6 py-14 lg:px-8">

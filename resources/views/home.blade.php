@@ -1,4 +1,4 @@
-<x-layouts.app :title="'Tnila | Construction Company'">
+<x-layouts.app :title="'Tnela | Construction Company'">
     <x-header />
 
     <main>

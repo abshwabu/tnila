@@ -7,7 +7,7 @@
     $social = $settings->social ?? [];
     $footer = $settings->footer ?? [];
 
-    $siteName = $branding['site_name'] ?? config('app.name', 'Tnila');
+    $siteName = $branding['site_name'] ?? config('app.name', 'Tnela');
     $tagline = $branding['tagline'] ?? 'Construction Company';
     $footerLogo = filled($branding['footer_logo'] ?? null)
         ? Site::imageUrl($branding['footer_logo'])
@@ -15,11 +15,11 @@
 
     $aboutBlurb = $footer['about_blurb'] ?? 'Building durable spaces with calm execution and clear communication. We deliver residential, commercial, industrial, and infrastructure projects with the kind of process clients can trust.';
 
-    $email = $contact['email'] ?? 'info@tnila.test';
+    $email = $contact['email'] ?? 'info@tnela.test';
     $phone = $contact['phone'] ?? '+254 700 000 000';
     $address = $contact['address'] ?? 'Addis Ababa, Ethiopia';
 
-    $copyrightRaw = $footer['copyright_text'] ?? 'Tnila. All rights reserved.';
+    $copyrightRaw = $footer['copyright_text'] ?? 'Tnela. All rights reserved.';
     $copyright = str_replace('{year}', (string) now()->year, $copyrightRaw);
     if (! str_starts_with($copyright, '©')) {
         $copyright = '© ' . now()->year . ' ' . $copyright;

@@ -37,7 +37,7 @@ class SiteSettingsCustomizationTest extends TestCase
         Role::findOrCreate('Admin');
 
         $this->admin = User::factory()->create([
-            'email' => 'admin@tnila.test',
+            'email' => 'admin@tnela.test',
             'name' => 'Admin',
         ]);
 
@@ -162,13 +162,13 @@ class SiteSettingsCustomizationTest extends TestCase
 
         Livewire::test(EditPageSection::class, ['record' => $hero->id])
             ->fillForm([
-                'content.heading' => 'Customized Hero Heading for Tnila',
+                'content.heading' => 'Customized Hero Heading for Tnela',
             ])
             ->call('save')
             ->assertHasNoFormErrors();
 
         $this->assertEquals(
-            'Customized Hero Heading for Tnila',
+            'Customized Hero Heading for Tnela',
             PageSection::query()->where('key', 'hero')->first()->content['heading']
         );
 
@@ -176,7 +176,7 @@ class SiteSettingsCustomizationTest extends TestCase
 
         $response = $this->get('/');
         $response->assertOk();
-        $response->assertSee('Customized Hero Heading for Tnila');
+        $response->assertSee('Customized Hero Heading for Tnela');
     }
 
     public function test_color_helper_utilities(): void
@@ -473,7 +473,7 @@ class SiteSettingsCustomizationTest extends TestCase
         $response->assertDontSee('Trusted by developers, homeowners, and public leaders');
 
         // 3. Standalone sections (FAQ, Contact, extra Stats) are not on homepage
-        $response->assertDontSee('Everything you need to know about building with Tnila');
+        $response->assertDontSee('Everything you need to know about building with Tnela');
         $response->assertDontSee('Start a conversation about your next project');
 
         // 4. Default body background does not override CSS radial glow

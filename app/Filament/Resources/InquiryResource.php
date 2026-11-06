@@ -41,7 +41,7 @@ class InquiryResource extends Resource
                 Tables\Actions\Action::make('reply')
                     ->label('Reply')
                     ->icon('heroicon-o-envelope')
-                    ->url(fn (ContactSubmission $record): string => 'mailto:' . $record->email . '?subject=' . rawurlencode('Thanks for contacting Tnila'))
+                    ->url(fn (ContactSubmission $record): string => 'mailto:' . $record->email . '?subject=' . rawurlencode('Thanks for contacting Tnela'))
                     ->openUrlInNewTab(),
                 Tables\Actions\Action::make('markContacted')
                     ->label('Contacted')

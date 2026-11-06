@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', $service->title . ' | Services | Tnila')
+@section('title', $service->title . ' | Services | Tnela')
 @section('meta_description', $service->short_description)
 
 @section('content')

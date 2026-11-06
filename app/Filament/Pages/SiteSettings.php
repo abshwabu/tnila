@@ -47,8 +47,8 @@ class SiteSettings extends Page implements HasForms
      * @var array<string, string>
      */
     public const GOOGLE_FONTS = [
-        'Sora' => 'Sora (Bold Geometric Display - Tnila Default)',
-        'Inter' => 'Inter (Modern & Clean Sans - Tnila Default)',
+        'Sora' => 'Sora (Bold Geometric Display - Tnela Default)',
+        'Inter' => 'Inter (Modern & Clean Sans - Tnela Default)',
         'Plus Jakarta Sans' => 'Plus Jakarta Sans (Contemporary Clean)',
         'Instrument Sans' => 'Instrument Sans (Default Clean)',
         'Poppins' => 'Poppins (Geometric & Friendly)',
@@ -208,7 +208,7 @@ class SiteSettings extends Page implements HasForms
                     TextInput::make('branding.site_name')
                         ->label('Organization / Site Name')
                         ->nullable()
-                        ->placeholder('Tnila')
+                        ->placeholder('Tnela')
                         ->helperText('Appears in the browser title, header logo area, and throughout the website.'),
 
                     TextInput::make('branding.tagline')
@@ -473,14 +473,14 @@ class SiteSettings extends Page implements HasForms
                         ->label('Public Contact Email')
                         ->email()
                         ->nullable()
-                        ->placeholder('info@tnila.test')
+                        ->placeholder('info@tnela.test')
                         ->helperText('Displayed in the header, contact page, and footer.'),
 
                     TextInput::make('contact.notification_email')
                         ->label('Internal Notification Email')
                         ->email()
                         ->nullable()
-                        ->placeholder('notifications@tnila.test')
+                        ->placeholder('notifications@tnela.test')
                         ->helperText('Incoming quote requests and contact messages are emailed to this address. Falls back to Public Contact Email if empty.'),
 
                     TextInput::make('contact.phone')
@@ -564,7 +564,7 @@ class SiteSettings extends Page implements HasForms
                                 ->label('Profile / Channel URL')
                                 ->url()
                                 ->nullable()
-                                ->placeholder('https://linkedin.com/company/tnila')
+                                ->placeholder('https://linkedin.com/company/tnela')
                                 ->helperText('Full URL to your profile, channel, or community group.'),
                         ]),
                     ]),
@@ -582,14 +582,14 @@ class SiteSettings extends Page implements HasForms
                 TextInput::make('seo.meta_title')
                     ->label('Default Meta Title')
                     ->nullable()
-                    ->placeholder('Tnila | Construction Company')
+                    ->placeholder('Tnela | Construction Company')
                     ->helperText('Appears in the browser tab title and as the primary heading in Google search results.'),
 
                 Textarea::make('seo.meta_description')
                     ->label('Default Meta Description')
                     ->rows(3)
                     ->nullable()
-                    ->placeholder('Tnila delivers construction projects across residential, commercial, industrial, and infrastructure sectors.')
+                    ->placeholder('Tnela delivers construction projects across residential, commercial, industrial, and infrastructure sectors.')
                     ->helperText('Summary blurb displayed under the page title in search engine result snippets.'),
 
                 FileUpload::make('seo.og_image')
@@ -606,7 +606,7 @@ class SiteSettings extends Page implements HasForms
                 TextInput::make('seo.twitter_handle')
                     ->label('Twitter / X Handle')
                     ->nullable()
-                    ->placeholder('@tnilaconstruct')
+                    ->placeholder('@tnelaconstruct')
                     ->helperText('Twitter account username credited on Twitter Card shares.'),
 
                 Textarea::make('seo.analytics_snippet')
@@ -636,7 +636,7 @@ class SiteSettings extends Page implements HasForms
                 TextInput::make('footer.copyright_text')
                     ->label('Copyright Notice')
                     ->nullable()
-                    ->placeholder('Tnila. All rights reserved.')
+                    ->placeholder('Tnela. All rights reserved.')
                     ->helperText('Copyright statement shown at the base of the page. Supports {year} token for dynamic current year.'),
 
                 Repeater::make('footer.legal_links')

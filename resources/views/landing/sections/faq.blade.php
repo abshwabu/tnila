@@ -9,7 +9,7 @@
 
     $content = is_array($section?->content) ? $section->content : [];
     $eyebrow = $content['eyebrow'] ?? 'Frequently Asked Questions';
-    $heading = $content['heading'] ?? 'Everything you need to know about building with Tnila';
+    $heading = $content['heading'] ?? 'Everything you need to know about building with Tnela';
     $subheading = $content['subheading'] ?? ($content['intro'] ?? 'Clear answers on project estimations, permits, warranties, and construction timelines.');
     $showContactCard = (bool) ($content['show_contact_card'] ?? true);
     $contactCardText = $content['contact_card_text'] ?? 'Still have questions? Our engineering desk is here to help.';

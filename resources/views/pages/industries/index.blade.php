@@ -11,8 +11,8 @@
 
 @extends('layouts.public')
 
-@section('title', 'Industries | ' . Site::setting('branding.site_name', 'Tnila'))
-@section('meta_description', 'See the sectors ' . Site::setting('branding.site_name', 'Tnila') . ' serves, including residential, commercial, industrial, and infrastructure construction.')
+@section('title', 'Industries | ' . Site::setting('branding.site_name', 'Tnela'))
+@section('meta_description', 'See the sectors ' . Site::setting('branding.site_name', 'Tnela') . ' serves, including residential, commercial, industrial, and infrastructure construction.')
 
 @section('content')
     <section class="px-6 py-14 lg:px-8">

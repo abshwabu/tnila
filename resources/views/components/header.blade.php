@@ -5,7 +5,7 @@
     $branding = $settings->branding ?? [];
     $navigation = $settings->navigation ?? [];
 
-    $siteName = $branding['site_name'] ?? config('app.name', 'Tnila');
+    $siteName = $branding['site_name'] ?? config('app.name', 'Tnela');
     $tagline = $branding['tagline'] ?? 'Construction Company';
     $logoLight = filled($branding['logo_light'] ?? null) ? Site::imageUrl($branding['logo_light']) : null;
 

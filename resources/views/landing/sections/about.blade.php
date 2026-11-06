@@ -89,7 +89,7 @@
                     <div class="{{ filled($story) ? 'lg:col-span-5' : 'lg:col-span-12' }} grid grid-cols-2 gap-3">
                         @foreach(array_slice($images, 0, 4) as $img)
                             <div class="aspect-[16/10] overflow-hidden rounded-2xl border border-stone-200 bg-stone-100 dark:bg-stone-900 flex items-center justify-center p-1.5 shadow-sm">
-                                <img src="{{ Site::imageUrl($img) }}" alt="Tnila build team" class="h-full w-full object-contain rounded-xl transition duration-200" />
+                                <img src="{{ Site::imageUrl($img) }}" alt="Tnela build team" class="h-full w-full object-contain rounded-xl transition duration-200" />
                             </div>
                         @endforeach
                     </div>

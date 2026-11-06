@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', $industry->name . ' | Industries | Tnila')
+@section('title', $industry->name . ' | Industries | Tnela')
 @section('meta_description', $industry->description)
 
 @section('content')

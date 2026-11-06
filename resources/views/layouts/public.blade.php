@@ -11,7 +11,7 @@
     $seo = $settings->seo ?? [];
     $footer = $settings->footer ?? [];
 
-    $siteName = $branding['site_name'] ?? config('app.name', 'Tnila');
+    $siteName = $branding['site_name'] ?? config('app.name', 'Tnela');
     $tagline = $branding['tagline'] ?? null;
 
     $primary = $theme['primary'] ?? '#d97706';
@@ -32,7 +32,7 @@
     $googleFontsUrl = ColorHelper::googleFontsUrl($headingFont, $bodyFont);
 
     $defaultTitle = $seo['meta_title'] ?? ($siteName . ' | ' . ($tagline ?? 'Construction Company'));
-    $defaultDescription = $seo['meta_description'] ?? 'Tnila delivers construction projects across residential, commercial, industrial, and infrastructure sectors.';
+    $defaultDescription = $seo['meta_description'] ?? 'Tnela delivers construction projects across residential, commercial, industrial, and infrastructure sectors.';
     $canonicalUrl = url()->current();
     $faviconUrl = filled($branding['favicon'] ?? null) ? Site::imageUrl($branding['favicon']) : asset('favicon.ico');
     $resolvedOgImage = filled($seo['og_image'] ?? null) ? Site::imageUrl($seo['og_image']) : null;

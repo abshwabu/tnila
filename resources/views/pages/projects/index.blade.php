@@ -10,8 +10,8 @@
 
 @extends('layouts.public')
 
-@section('title', 'Projects | ' . Site::setting('branding.site_name', 'Tnila'))
-@section('meta_description', 'Browse ' . Site::setting('branding.site_name', 'Tnila') . ' projects by industry and filter the portfolio by sector.')
+@section('title', 'Projects | ' . Site::setting('branding.site_name', 'Tnela'))
+@section('meta_description', 'Browse ' . Site::setting('branding.site_name', 'Tnela') . ' projects by industry and filter the portfolio by sector.')
 
 @section('content')
     <section class="px-6 py-14 lg:px-8">

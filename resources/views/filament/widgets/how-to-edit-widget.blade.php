@@ -4,7 +4,7 @@
         icon-color="primary"
     >
         <x-slot name="heading">
-            How to Customize the Tnila Website
+            How to Customize the Tnela Website
         </x-slot>
 
         <x-slot name="description">

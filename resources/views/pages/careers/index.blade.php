@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
-@section('title', 'Careers | Tnila')
-@section('meta_description', 'Explore open roles at Tnila and apply for current job openings.')
+@section('title', 'Careers | Tnela')
+@section('meta_description', 'Explore open roles at Tnela and apply for current job openings.')
 
 @section('content')
     <section class="px-6 py-14 lg:px-8">

@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
-@section('title', 'Style Guide | Tnila')
-@section('meta_description', 'Internal style guide for Tnila’s public-facing design system.')
+@section('title', 'Style Guide | Tnela')
+@section('meta_description', 'Internal style guide for Tnela’s public-facing design system.')
 
 @section('content')
     @php

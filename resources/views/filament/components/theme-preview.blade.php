@@ -97,7 +97,7 @@
             </div>
 
             <h3 class="mb-2 text-xl font-bold tracking-tight" style="font-family: '{{ $headingFont }}', sans-serif; color: {{ $text }};">
-                Tnila Construction Company
+                Tnela Construction Company
             </h3>
 
             <p class="mb-5 text-sm leading-relaxed opacity-80" style="font-family: '{{ $bodyFont }}', sans-serif;">

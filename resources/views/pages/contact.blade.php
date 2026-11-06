@@ -2,7 +2,7 @@
     use App\Support\Site;
 
     $contact = Site::setting('contact', []);
-    $email = $contact['email'] ?? 'info@tnila.test';
+    $email = $contact['email'] ?? 'info@tnela.test';
     $phone = $contact['phone'] ?? '+254 700 000 000';
     $secondaryPhone = $contact['secondary_phone'] ?? null;
     $address = $contact['address'] ?? 'Addis Ababa, Ethiopia';
@@ -18,8 +18,8 @@
 
 @extends('layouts.public')
 
-@section('title', 'Contact | ' . Site::setting('branding.site_name', 'Tnila'))
-@section('meta_description', 'Contact ' . Site::setting('branding.site_name', 'Tnila') . ' to start a construction project or request a quote.')
+@section('title', 'Contact | ' . Site::setting('branding.site_name', 'Tnela'))
+@section('meta_description', 'Contact ' . Site::setting('branding.site_name', 'Tnela') . ' to start a construction project or request a quote.')
 
 @section('content')
     <section class="px-6 py-14 lg:px-8">

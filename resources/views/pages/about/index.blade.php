@@ -3,7 +3,7 @@
 
     $section = Site::section('about');
     $content = $section->content ?? [];
-    $eyebrow = $content['eyebrow'] ?? 'About Tnila';
+    $eyebrow = $content['eyebrow'] ?? 'About Tnela';
     $heading = $content['heading'] ?? 'A construction partner built around clarity, quality, and delivery.';
     $subheading = $content['subheading'] ?? ($content['story_intro'] ?? 'We help clients shape projects that move smoothly from intent to completion, with a process designed to reduce friction and keep every stakeholder informed.');
     $ctaSection = Site::section('cta_banner');
@@ -12,8 +12,8 @@
 
 @extends('layouts.public')
 
-@section('title', 'About | ' . Site::setting('branding.site_name', 'Tnila'))
-@section('meta_description', 'Learn who ' . Site::setting('branding.site_name', 'Tnila') . ' is, how we work, and what drives our construction projects.')
+@section('title', 'About | ' . Site::setting('branding.site_name', 'Tnela'))
+@section('meta_description', 'Learn who ' . Site::setting('branding.site_name', 'Tnela') . ' is, how we work, and what drives our construction projects.')
 
 @section('content')
     <section class="px-6 py-14 lg:px-8">
@@ -43,7 +43,7 @@
             <div class="mt-10 grid gap-6 md:grid-cols-3">
                 <a href="{{ route('about.story') }}" class="rounded-[1.75rem] border border-stone-200 bg-white p-6 shadow-sm transition hover:-translate-y-1">
                     <p class="text-xs font-semibold uppercase tracking-[0.25em] text-amber-700">Our story</p>
-                    <h2 class="mt-3 text-2xl font-semibold text-slate-950">How Tnila started</h2>
+                    <h2 class="mt-3 text-2xl font-semibold text-slate-950">How Tnela started</h2>
                     <p class="mt-3 text-sm leading-6 text-slate-600">The journey from a practical build team to a full-service construction company.</p>
                 </a>
                 <a href="{{ route('about.mission') }}" class="rounded-[1.75rem] border border-stone-200 bg-white p-6 shadow-sm transition hover:-translate-y-1">

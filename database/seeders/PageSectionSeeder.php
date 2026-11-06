@@ -238,7 +238,7 @@ class PageSectionSeeder extends Seeder
                 'anchor' => 'faq',
                 'content' => [
                     'eyebrow' => 'Frequently Asked Questions',
-                    'heading' => 'Everything you need to know about building with Tnila',
+                    'heading' => 'Everything you need to know about building with Tnela',
                     'subheading' => 'Clear answers on project estimations, permits, warranties, and construction timelines.',
                     'show_contact_card' => true,
                     'contact_card_text' => 'Still have questions? Our engineering desk is here to help.',

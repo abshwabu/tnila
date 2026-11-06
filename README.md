@@ -1,4 +1,4 @@
-# Tnila
+# Tnela
 
 A Laravel 11 construction company website starter with a Filament 3 admin panel, Livewire 3, Alpine.js, Tailwind CSS 3, Spatie Media Library, and Spatie Laravel Sluggable.
 
@@ -50,7 +50,7 @@ A Laravel 11 construction company website starter with a Filament 3 admin panel,
 
 - Filament runs at `/admin`
 - Seeded local admin:
-  - Email: `admin@tnila.test`
+  - Email: `admin@tnela.test`
   - Password: `password`
 
 ## Going live checklist

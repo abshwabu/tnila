@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', $project->title . ' | Projects | Tnila')
+@section('title', $project->title . ' | Projects | Tnela')
 @section('meta_description', strip_tags(\Illuminate\Support\Str::limit($project->description, 160)))
 
 @section('content')

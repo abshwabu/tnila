@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', $job->title . ' | Careers | Tnila')
+@section('title', $job->title . ' | Careers | Tnela')
 @section('meta_description', strip_tags(\Illuminate\Support\Str::limit($job->description, 160)))
 
 @section('content')

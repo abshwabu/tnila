@@ -4,7 +4,7 @@
     $settings = Site::settings();
     $logoDark = $settings->branding['logo_dark'] ?? null;
     $logoLight = $settings->branding['logo_light'] ?? null;
-    $siteName = $settings->branding['site_name'] ?? 'Tnila';
+    $siteName = $settings->branding['site_name'] ?? 'Tnela';
     $logoUrlDark = filled($logoDark) ? Site::imageUrl($logoDark) : null;
     $logoUrlLight = filled($logoLight) ? Site::imageUrl($logoLight) : null;
 @endphp

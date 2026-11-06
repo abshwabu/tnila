@@ -18,7 +18,7 @@ class SiteSettingSeeder extends Seeder
             ['id' => 1],
             [
                 'branding' => [
-                    'site_name' => 'Tnila',
+                    'site_name' => 'Tnela',
                     'tagline' => 'Construction Company',
                     'logo_light' => null,
                     'logo_dark' => null,
@@ -38,7 +38,7 @@ class SiteSettingSeeder extends Seeder
                     'radius_style' => 'rounded-xl',
                 ],
                 'contact' => [
-                    'email' => 'info@tnila.test',
+                    'email' => 'info@tnela.test',
                     'notification_email' => null,
                     'phone' => '+254 700 000 000',
                     'secondary_phone' => '+254 711 000 000',
@@ -67,15 +67,15 @@ class SiteSettingSeeder extends Seeder
                     'cta_open_in_new_tab' => false,
                 ],
                 'seo' => [
-                    'meta_title' => 'Tnila | Construction Company',
-                    'meta_description' => 'Tnila delivers construction projects across residential, commercial, industrial, and infrastructure sectors with calm execution and clear communication.',
+                    'meta_title' => 'Tnela | Construction Company',
+                    'meta_description' => 'Tnela delivers construction projects across residential, commercial, industrial, and infrastructure sectors with calm execution and clear communication.',
                     'og_image' => null,
-                    'twitter_handle' => '@tnilaconstruct',
+                    'twitter_handle' => '@tnelaconstruct',
                     'analytics_snippet' => null,
                 ],
                 'footer' => [
                     'about_blurb' => 'Building durable spaces with calm execution and clear communication. We deliver residential, commercial, industrial, and infrastructure projects with the kind of process clients can trust.',
-                    'copyright_text' => 'Tnila. All rights reserved.',
+                    'copyright_text' => 'Tnela. All rights reserved.',
                     'legal_links' => [
                         ['label' => 'Privacy Policy', 'url' => '#', 'open_in_new_tab' => false],
                         ['label' => 'Terms of Service', 'url' => '#', 'open_in_new_tab' => false],
